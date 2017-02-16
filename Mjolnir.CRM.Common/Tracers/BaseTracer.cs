@@ -9,8 +9,8 @@ namespace Mjolnir.CRM.Common.Tracers
 {
     public class BaseTracer : ITracingService
     {
-        public readonly CRMContext context = null;
-        public BaseTracer(CRMContext context)
+        public readonly CrmContext context = null;
+        public BaseTracer(CrmContext context)
         {
             this.context = context;
         }

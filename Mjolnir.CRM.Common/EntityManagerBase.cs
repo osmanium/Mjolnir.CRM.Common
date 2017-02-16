@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ namespace Mjolnir.CRM.Common
 {
     public abstract class EntityManagerBase
     {
-        internal CRMContext context = null;
+        internal CrmContext context = null;
         internal string entityLogicalName = string.Empty;
 
         internal abstract string[] DefaultFields { get; }
 
-        public EntityManagerBase(CRMContext context, string entityLogicalName)
+        public EntityManagerBase(CrmContext context, string entityLogicalName)
         {
             this.context = context;
             this.entityLogicalName = entityLogicalName;
@@ -24,7 +25,7 @@ namespace Mjolnir.CRM.Common
 
         public Guid Create(Entity entity)
         {
-            context.TracingService.Trace("CreatePublisher started.");
+            context.TracingService.Trace("Create started.");
 
             try
             {
@@ -93,6 +94,7 @@ namespace Mjolnir.CRM.Common
 
         public void HandleException(Exception ex)
         {
+            //TODO : Use trace wrapper
             context.TracingService.Trace(ex.Message + "\n" + ex.StackTrace + "\n");
         }
     }

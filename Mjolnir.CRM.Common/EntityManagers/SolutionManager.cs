@@ -9,6 +9,34 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common.EntityManagers
 {
+    public static partial class EntityAttributes
+    {
+        public static class SolutionEntityAttributes
+        {
+            public const string EntityName = "solution";
+            public const string IdFieldName = "solutionid";
+            public const string VersionFieldName = "version";
+            public const string FriendlyNameFieldName = "friendlyname";
+            public const string UniqueNameFieldName = "uniquename";
+            public const string ParentSolutionIdFieldName = "parentsolutionid";
+            public const string IsManagedFieldName = "ismanaged";
+            public const string PublisherId = "publisherid";
+            public const string Description = "description";
+        }
+
+        public static class SolutionComponentEntityAttributes
+        {
+            public const string EntityName = "solutioncomponent";
+            public const string ComponentType = "componenttype";
+            public const string ObjectId = "objectid";
+            public const string SolutionComponentId = "solutioncomponentid";
+            public const string SolutionId = "solutionid";
+            public const string IsMetadata = "ismetadata";
+            public const string RootComponentBehavior = "rootcomponentbehavior";
+        }
+    }
+
+
     public class SolutionManager : EntityManagerBase
     {
         internal override string[] DefaultFields
@@ -26,7 +54,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
             }
         }
 
-        public SolutionManager(CRMContext context)
+        public SolutionManager(CrmContext context)
             : base(context, EntityAttributes.SolutionComponentEntityAttributes.EntityName)
         { }
 

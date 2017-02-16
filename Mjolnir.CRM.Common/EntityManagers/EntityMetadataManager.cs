@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common.EntityManagers
 {
-    public class EntityManager : EntityManagerBase
+    public class EntityMetadataManager : EntityManagerBase
     {
-        public EntityManager(CRMContext context)
+        public EntityMetadataManager(CrmContext context)
             : base(context, "") //TODO : Update here
         { }
 

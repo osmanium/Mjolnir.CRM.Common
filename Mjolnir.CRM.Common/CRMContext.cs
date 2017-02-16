@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common
 {
-    public class CRMContext
+    public class CrmContext
     {
         public ITracingService TracingService { get; private set; }
         public IPluginExecutionContext PluginExecutionContext { get; private set; }
@@ -20,7 +20,7 @@ namespace Mjolnir.CRM.Common
 
         public TraceLevel TraceLevel { get; }
 
-        public CRMContext(OrganizationServiceProxy OrganizationService, Guid UserId,
+        public CrmContext(OrganizationServiceProxy OrganizationService, Guid UserId,
             ITracingService TracingService, 
             IPluginExecutionContext PluginExecutionContext = null, 
             IServiceProvider ServiceProvider = null,

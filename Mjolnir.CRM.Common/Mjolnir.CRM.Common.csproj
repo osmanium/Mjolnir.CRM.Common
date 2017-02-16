@@ -96,9 +96,9 @@
     <Compile Include="Constants.cs" />
     <Compile Include="CRMBusinessException.cs" />
     <Compile Include="CRMConnection.cs" />
-    <Compile Include="EntityAttributes.cs" />
     <Compile Include="EntityManagerBase.cs" />
-    <Compile Include="EntityManagers\EntityManager.cs" />
+    <Compile Include="EntityManagers\ContactEntityManager.cs" />
+    <Compile Include="EntityManagers\EntityMetadataManager.cs" />
     <Compile Include="EntityManagers\PublisherManager.cs" />
     <Compile Include="PluginBase.cs" />
     <Compile Include="CRMContext.cs" />

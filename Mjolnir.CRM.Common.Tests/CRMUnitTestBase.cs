@@ -13,7 +13,7 @@ namespace Mjolnir.CRM.Common.Tests
     public class CRMUnitTestBase
     {
 
-        public CRMContext CRMContext { get; set; }
+        public CrmContext CRMContext { get; set; }
 
         [TestInitialize()]
         public void TestInit()
@@ -45,7 +45,7 @@ namespace Mjolnir.CRM.Common.Tests
                 }
             }
 
-            CRMContext = new CRMContext(_orgService, _orgService.CallerId, new CrmUnitTestTracer(CRMContext), null, null);
+            CRMContext = new CrmContext(_orgService, _orgService.CallerId, new CrmUnitTestTracer(CRMContext), null, null);
         }
 
         [TestCleanup]

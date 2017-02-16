@@ -11,7 +11,7 @@ namespace Mjolnir.CRM.Common.Tests
 {
     public class CrmUnitTestTracer : BaseTracer
     {
-        public CrmUnitTestTracer(CRMContext context)
+        public CrmUnitTestTracer(CrmContext context)
             : base(context)
         {
         }

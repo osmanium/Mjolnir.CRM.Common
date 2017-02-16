@@ -12,7 +12,7 @@ namespace Mjolnir.CRM.Common
 {
     public abstract class PluginBase : IPlugin
     {
-        protected CRMContext PluginContext { get; private set; }
+        protected CrmContext PluginContext { get; private set; }
 
         public void Execute(IServiceProvider serviceProvider)
         {
@@ -22,13 +22,13 @@ namespace Mjolnir.CRM.Common
 
             var organizationService = organizationServiceFactory.CreateOrganizationService(pluginExecutionContext.UserId);
 
-            this.PluginContext = new CRMContext((OrganizationServiceProxy)organizationService, pluginExecutionContext.UserId, tracingService, pluginExecutionContext, serviceProvider);
+            this.PluginContext = new CrmContext((OrganizationServiceProxy)organizationService, pluginExecutionContext.UserId, tracingService, pluginExecutionContext, serviceProvider);
 
             
             ExecuteInternal(this.PluginContext);
 
         }
 
-        public abstract void ExecuteInternal(CRMContext pluginContext);
+        public abstract void ExecuteInternal(CrmContext pluginContext);
     }
 }
