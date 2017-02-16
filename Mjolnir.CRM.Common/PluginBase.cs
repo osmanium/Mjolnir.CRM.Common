@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Tooling.Connector;
+using Mjolnir.CRM.Common.Tracers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Mjolnir.CRM.Common
 
         public void Execute(IServiceProvider serviceProvider)
         {
-            var tracingService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
+            var tracingService = new BaseTracer(this.PluginContext);
             var pluginExecutionContext = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
             var organizationServiceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
 

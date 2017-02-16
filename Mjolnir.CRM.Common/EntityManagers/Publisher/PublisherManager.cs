@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,23 +8,7 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common.EntityManagers
 {
-    public static partial class EntityAttributes
-    {
-        public static class PublisherEntityAttributes
-        {
-            public const string EntityName = "publisher";
-            public const string FriendlyName = "friendlyname";
-            public const string UniqueName = "uniquename";
-            public const string SupportingWebsiteUrl = "supportingwebsiteurl";
-            public const string CustomizationPrefix = "customizationprefix";
-            public const string EMailAddress = "emailaddress";
-            public const string Description = "description";
-        }
-    }
-    
-
-
-    public class PublisherManager : EntityManagerBase
+    public class PublisherManager : EntityManagerBase<PublisherEntity>
     {
         internal override string[] DefaultFields
         {
@@ -44,6 +30,26 @@ namespace Mjolnir.CRM.Common.EntityManagers
         {
         }
 
+
+        public Entity GetPublisherByUniqueName(string publisherUniqueName)
+        {
+            try
+            {
+                context.TracingService.Trace("GetPublisherByUniqueName started.");
+
+                var result = RetrieveMultipleByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, publisherUniqueName);
+
+                if (result != null && result.Entities.Any())
+                    return result.Entities.FirstOrDefault();
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                this.HandleException(ex);
+                return null;
+            }
+        }
 
     }
 }

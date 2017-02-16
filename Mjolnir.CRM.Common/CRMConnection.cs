@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common
 {
-    public static class CRMConnection
+    public static class CrmConnection
     {
         public static OrganizationServiceProxy ConnectCrm(string userName, string serverName, string password, string domain, string port, string organization, bool useSSL)
         {

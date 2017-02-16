@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
+using Mjolnir.CRM.Common.Tracers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ namespace Mjolnir.CRM.Common
 {
     public class CrmContext
     {
-        public ITracingService TracingService { get; private set; }
+        public BaseTracer TracingService { get; private set; }
         public IPluginExecutionContext PluginExecutionContext { get; private set; }
         public OrganizationServiceProxy OrganizationService { get; private set; }
         public IServiceProvider ServiceProvider { get; private set; }
@@ -21,7 +22,7 @@ namespace Mjolnir.CRM.Common
         public TraceLevel TraceLevel { get; }
 
         public CrmContext(OrganizationServiceProxy OrganizationService, Guid UserId,
-            ITracingService TracingService, 
+            BaseTracer TracingService, 
             IPluginExecutionContext PluginExecutionContext = null, 
             IServiceProvider ServiceProvider = null,
             TraceLevel TraceLevel = TraceLevel.Warning)

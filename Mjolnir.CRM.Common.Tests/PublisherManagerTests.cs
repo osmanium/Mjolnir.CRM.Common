@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Mjolnir.CRM.Common.Tests
 {
     [TestClass]
-    public class PublisherManagerTests : CRMUnitTestBase
+    public class PublisherManagerTests : CrmUnitTestBase
     {
         const string PUBLISHER_FRIENDLY_NAME = "Test Publisher";
         const string PUBLISHER_UNIQUE_NAME = "test_publisher";
@@ -21,13 +21,13 @@ namespace Mjolnir.CRM.Common.Tests
         {
             var publisherManager = new PublisherManager(CRMContext);
 
-            var publisherEntity = new Entity();
-            publisherEntity[EntityAttributes.PublisherEntityAttributes.FriendlyName] = PUBLISHER_FRIENDLY_NAME;
-            publisherEntity[EntityAttributes.PublisherEntityAttributes.UniqueName] = PUBLISHER_UNIQUE_NAME;
-            publisherEntity[EntityAttributes.PublisherEntityAttributes.CustomizationPrefix] = PUBLISHER_PREFIX;
-            publisherEntity[EntityAttributes.PublisherEntityAttributes.SupportingWebsiteUrl] = "www.abc.com";
-            publisherEntity[EntityAttributes.PublisherEntityAttributes.EMailAddress] = "123@abc.com";
-            publisherEntity[EntityAttributes.PublisherEntityAttributes.Description] = "description";
+            var publisherEntity = new PublisherEntity();
+            publisherEntity.FriendlyName = PUBLISHER_FRIENDLY_NAME;
+            publisherEntity.UniqueName = PUBLISHER_UNIQUE_NAME;
+            publisherEntity.CustomizationPrefix = PUBLISHER_PREFIX;
+            publisherEntity.SupportingWebsiteUrl = "www.abc.com";
+            publisherEntity.EMailAddress = "123@abc.com";
+            publisherEntity.Description = "description";
 
             publisherEntity.Id = publisherManager.Create(publisherEntity);
 

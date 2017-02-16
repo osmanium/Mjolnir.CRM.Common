@@ -9,7 +9,7 @@ using Microsoft.Xrm.Sdk;
 namespace Mjolnir.CRM.Common.Tests
 {
     [TestClass]
-    public class SolutionManagerTests : CRMUnitTestBase
+    public class SolutionManagerTests : CrmUnitTestBase
     {
        
 

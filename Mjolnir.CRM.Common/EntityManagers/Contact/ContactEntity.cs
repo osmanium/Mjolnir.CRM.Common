@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xrm.Sdk;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,21 +14,13 @@ namespace Mjolnir.CRM.Common.EntityManagers
             public const string EntityName = "contact";
         }
     }
-    
 
-    public class ContactEntityManager : EntityManagerBase
+    public class ContactEntity : EntityBase
     {
-        public ContactEntityManager(CrmContext context) 
-            : base(context, EntityAttributes.ContactEntityAttributes.EntityName)
+        public ContactEntity()
+            : base(EntityAttributes.ContactEntityAttributes.EntityName)
         {
-        }
 
-        internal override string[] DefaultFields
-        {
-            get
-            {
-                return null;
-            }
         }
     }
 }

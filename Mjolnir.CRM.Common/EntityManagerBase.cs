@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common
 {
-    public abstract class EntityManagerBase
+    public abstract class EntityManagerBase<TEntity>
+        where TEntity : EntityBase
     {
         internal CrmContext context = null;
         internal string entityLogicalName = string.Empty;
@@ -23,7 +24,7 @@ namespace Mjolnir.CRM.Common
         }
 
 
-        public Guid Create(Entity entity)
+        public Guid Create(TEntity entity)
         {
             context.TracingService.Trace("Create started.");
 
@@ -49,17 +50,28 @@ namespace Mjolnir.CRM.Common
             context.OrganizationService.Delete(entityLogicalName, id);
         }
 
-        public void Update(Entity entity)
+        public void Update(TEntity entity)
         {
             context.OrganizationService.Update(entity);
         }
 
-        public Entity RetrieveById(Guid id, ColumnSet columns = null)
+        public TEntity RetrieveById(Guid id, ColumnSet columns = null)
         {
+            context.TracingService.Trace("RetrieveById started.");
+
             if (columns == null || !columns.Columns.Any())
                 columns = new ColumnSet(DefaultFields);
 
-            return context.OrganizationService.Retrieve(entityLogicalName, id, columns);
+            try
+            {
+                return context.OrganizationService.Retrieve(entityLogicalName, id, columns).ToEntity<TEntity>();
+
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+                return null;
+            }
         }
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, ColumnSet columns = null)

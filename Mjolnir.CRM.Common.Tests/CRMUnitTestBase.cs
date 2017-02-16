@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Mjolnir.CRM.Common.Tests
 {
     [TestClass]
-    public class CRMUnitTestBase
+    public class CrmUnitTestBase
     {
 
         public CrmContext CRMContext { get; set; }
@@ -27,7 +27,7 @@ namespace Mjolnir.CRM.Common.Tests
             var sourceUseSSL = Boolean.Parse(ConfigurationManager.AppSettings["UseSSL"]);
 
 
-            var _orgService = CRMConnection.ConnectCrm(sourceUserName, sourceServer, sourcePassword, sourceDomain, sourcePort, sourceOrganizationName, sourceUseSSL);
+            var _orgService = CrmConnection.ConnectCrm(sourceUserName, sourceServer, sourcePassword, sourceDomain, sourcePort, sourceOrganizationName, sourceUseSSL);
             if (_orgService == null)
             {
                 throw new Exception("CRM connection failed");
