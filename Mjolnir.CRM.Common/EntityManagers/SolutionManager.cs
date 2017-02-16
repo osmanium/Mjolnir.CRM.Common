@@ -11,10 +11,100 @@ namespace Mjolnir.CRM.Common.EntityManagers
 {
     public class SolutionManager : EntityManagerBase
     {
+        internal override string[] DefaultFields
+        {
+            get
+            {
+                return new string[] {
+                    EntityAttributes.PublisherEntityAttributes.FriendlyName,
+                    EntityAttributes.PublisherEntityAttributes.UniqueName,
+                    EntityAttributes.PublisherEntityAttributes.CustomizationPrefix,
+                    EntityAttributes.PublisherEntityAttributes.Description,
+                    EntityAttributes.PublisherEntityAttributes.SupportingWebsiteUrl,
+                    EntityAttributes.PublisherEntityAttributes.EMailAddress
+                };
+            }
+        }
+
         public SolutionManager(CRMContext context)
-            : base(context)
+            : base(context, EntityAttributes.SolutionComponentEntityAttributes.EntityName)
         { }
 
+
+        public Entity CreatePublisher(string friendlyName, string uniqueName, string customizationPrefix, string supportingWebSiteUrl = null, string emailAddress = null, string description = null)
+        {
+            context.TracingService.Trace("CreatePublisher started.");
+
+            try
+            {
+                var publisher = new Entity(EntityAttributes.PublisherEntityAttributes.EntityName);
+
+                publisher.Attributes[EntityAttributes.PublisherEntityAttributes.FriendlyName] = friendlyName;
+                publisher.Attributes[EntityAttributes.PublisherEntityAttributes.UniqueName] = uniqueName;
+                publisher.Attributes[EntityAttributes.PublisherEntityAttributes.CustomizationPrefix] = customizationPrefix;
+                publisher.Attributes[EntityAttributes.PublisherEntityAttributes.Description] = description;
+                publisher.Attributes[EntityAttributes.PublisherEntityAttributes.SupportingWebsiteUrl] = supportingWebSiteUrl;
+                publisher.Attributes[EntityAttributes.PublisherEntityAttributes.EMailAddress] = emailAddress;
+
+
+                publisher.Id = context.OrganizationService.Create(publisher);
+                return publisher;
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+                return null;
+            }
+
+        }
+
+        public Entity GetPublisherByUniqueName(string publisherUniqueName)
+        {
+            try
+            {
+                context.TracingService.Trace("GetPublisherByUniqueName started.");
+
+                string[] retrieveSolutionColumns = new string[] {
+                    EntityAttributes.PublisherEntityAttributes.CustomizationPrefix,
+                    EntityAttributes.PublisherEntityAttributes.Description,
+                    EntityAttributes.PublisherEntityAttributes.EMailAddress,
+                    EntityAttributes.PublisherEntityAttributes.FriendlyName,
+                    EntityAttributes.PublisherEntityAttributes.SupportingWebsiteUrl,
+                    EntityAttributes.PublisherEntityAttributes.UniqueName
+                };
+
+                QueryExpression query = new QueryExpression(EntityAttributes.PublisherEntityAttributes.EntityName);
+                query.ColumnSet = new ColumnSet(retrieveSolutionColumns);
+                query.Criteria.AddCondition(new ConditionExpression(EntityAttributes.PublisherEntityAttributes.UniqueName, ConditionOperator.Equal, publisherUniqueName));
+
+                var result = context.OrganizationService.RetrieveMultiple(query);
+
+                if (result != null && result.Entities.Any())
+                    return result.Entities.FirstOrDefault();
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                this.HandleException(ex);
+                return null;
+            }
+        }
+
+        public void DeletePublisher(Guid publisherId)
+        {
+            context.TracingService.Trace("DeletePublisher started.");
+
+            try
+            {
+                context.OrganizationService.Delete(EntityAttributes.PublisherEntityAttributes.EntityName, publisherId);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+
+        }
 
         public EntityCollection GetAllSolutions()
         {
@@ -197,6 +287,36 @@ namespace Mjolnir.CRM.Common.EntityManagers
             {
                 HandleException(ex);
                 return null;
+            }
+        }
+
+        public Guid GetSolutionIdByUniqueSolutionName(string uniqueSolutionName)
+        {
+            context.TracingService.Trace("GetSolutionIdByUniqueSolutionName started.");
+
+            try
+            {
+                string[] retrieveSolutionColumns = new string[] {
+                    EntityAttributes.SolutionEntityAttributes.UniqueNameFieldName
+                };
+
+                QueryExpression query = new QueryExpression(EntityAttributes.SolutionEntityAttributes.EntityName);
+                query.ColumnSet = new ColumnSet(retrieveSolutionColumns);
+                query.Criteria.AddCondition(new ConditionExpression(EntityAttributes.SolutionEntityAttributes.IdFieldName, ConditionOperator.Equal, uniqueSolutionName));
+
+                var result = context.OrganizationService.RetrieveMultiple(query);
+
+                if (result != null && result.Entities.Any())
+                {
+                    return result.Entities.FirstOrDefault().Id;
+                }
+
+                return Guid.Empty;
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+                return Guid.Empty;
             }
         }
 

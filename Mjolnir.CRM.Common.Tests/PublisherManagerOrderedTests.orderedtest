@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="publishermanagerorderedtests" storage="c:\prj\github\mjolnir.crm.common\mjolnir.crm.common\mjolnir.crm.common.tests\publishermanagerorderedtests.orderedtest" id="3fa290ed-c52f-4366-97e3-c58cfbbeab9c" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="da23587a-646d-edbd-e864-49c66c964706" name="should_create_publisher" storage="bin\debug\mjolnir.crm.common.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="8a2b3ab8-88c8-92fa-5b5c-6aae8c71d7fa" name="should_create_solution" storage="bin\debug\mjolnir.crm.common.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

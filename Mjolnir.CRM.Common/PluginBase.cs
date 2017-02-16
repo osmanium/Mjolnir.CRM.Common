@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Tooling.Connector;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Mjolnir.CRM.Common
 
             var organizationService = organizationServiceFactory.CreateOrganizationService(pluginExecutionContext.UserId);
 
-            this.PluginContext = new CRMContext(organizationService, pluginExecutionContext.UserId, tracingService, pluginExecutionContext, serviceProvider);
+            this.PluginContext = new CRMContext((OrganizationServiceProxy)organizationService, pluginExecutionContext.UserId, tracingService, pluginExecutionContext, serviceProvider);
 
             
             ExecuteInternal(this.PluginContext);

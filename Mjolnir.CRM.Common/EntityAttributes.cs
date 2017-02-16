@@ -37,6 +37,10 @@ namespace Mjolnir.CRM.Common
             public const string EntityName = "publisher";
             public const string FriendlyName = "friendlyname";
             public const string UniqueName = "uniquename";
+            public const string SupportingWebsiteUrl = "supportingwebsiteurl";
+            public const string CustomizationPrefix = "customizationprefix";
+            public const string EMailAddress = "emailaddress";
+            public const string Description = "description";
         }
     }
 }
