@@ -21,13 +21,25 @@ namespace Mjolnir.CRM.Common.EntityManagers
                     EntityAttributes.CrmSettingEntityAttributes.MoneySetting,
                     EntityAttributes.CrmSettingEntityAttributes.StringSetting,
                     EntityAttributes.CrmSettingEntityAttributes.SystemUserSettingEntityReference,
+                    EntityAttributes.CrmSettingEntityAttributes.BusinessUnitSettingEntityReference,
+                    EntityAttributes.CrmSettingEntityAttributes.TraceLevelSettingOptionSet
                 };
             }
         }
 
-        public CrmSettingEntityManager(CrmContext context) 
+        public CrmSettingEntityManager(CrmContext context)
             : base(context, EntityAttributes.CrmSettingEntityAttributes.EntityName)
         {
+        }
+
+        public CrmSettingEntity GetCrmSettingByKey(string key)
+        {
+            var settings = RetrieveMultipleByAttributeExactValue(EntityAttributes.CrmSettingEntityAttributes.SettingKey, key);
+
+            if (settings != null)
+                return settings.Entities.First().ToEntity<CrmSettingEntity>();
+
+            return null;
         }
     }
 }

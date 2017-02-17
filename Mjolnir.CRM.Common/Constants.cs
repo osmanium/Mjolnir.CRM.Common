@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common
 {
-    public class Constants
+    public static partial class Constants
     {
-       
+        public static class CrmSettingKeys
+        {
+            public const string CrmTraceLevel = "CrmTraceLevel";
+        }
     }
 }

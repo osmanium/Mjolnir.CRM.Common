@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Tooling.Connector;
+using Mjolnir.CRM.Common.EntityManagers;
 using Mjolnir.CRM.Common.Loggers;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,22 @@ namespace Mjolnir.CRM.Common
             var organizationServiceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
             var organizationService = organizationServiceFactory.CreateOrganizationService(pluginExecutionContext.UserId);
             var tracingService = new CrmLogger((ITracingService)serviceProvider.GetService(typeof(ITracingService)));
-            
+
             this.PluginContext = new CrmContext(organizationService, pluginExecutionContext.UserId, tracingService, pluginExecutionContext, serviceProvider);
 
-            //TODO : Get configurations
+            //Get trace configurations
+            var crmSettingEntityManager = new CrmSettingEntityManager(PluginContext);
+            var configuration = crmSettingEntityManager.GetCrmSettingByKey(Constants.CrmSettingKeys.CrmTraceLevel);
 
-            //TODO : Update trace level based on configuration
+            if (configuration != null && configuration.TraceLevelSettingOptionSet != null)
+            {
+                //Update trace level based on configuration
+                PluginContext.TraceLevel = (TraceLevel)configuration.TraceLevelSettingOptionSet.Value;
+            }
+            else
+            {
+                PluginContext.TracingService.TraceWarning("Trace Level configuration is not found in CrmSettings, default confuguration is applied.");
+            }
 
             this.PluginContext.TracingService.TraceError("CrmSettings Hash : " + CrmContext.CrmSettings.GetHashCode().ToString());
 

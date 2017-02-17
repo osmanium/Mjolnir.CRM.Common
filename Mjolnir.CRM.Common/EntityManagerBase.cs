@@ -77,6 +77,7 @@ namespace Mjolnir.CRM.Common
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, ColumnSet columns = null)
         {
+            //TODO : Verbose trace
             if (columns == null || !columns.Columns.Any())
                 columns = new ColumnSet(DefaultFields);
 

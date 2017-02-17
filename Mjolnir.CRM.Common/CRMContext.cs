@@ -23,7 +23,7 @@ namespace Mjolnir.CRM.Common
 
         public bool IsPlugin { get { return PluginExecutionContext != null; } }
 
-        public TraceLevel TraceLevel { get; }
+        public TraceLevel TraceLevel { get; set; }
 
         public static readonly ConcurrentDictionary<Guid, Dictionary<string, CrmSettingEntity>> CrmSettings = new ConcurrentDictionary<Guid, Dictionary<string, CrmSettingEntity>>();
 

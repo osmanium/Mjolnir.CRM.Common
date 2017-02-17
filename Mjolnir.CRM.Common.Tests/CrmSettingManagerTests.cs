@@ -26,6 +26,7 @@ namespace Mjolnir.CRM.Common.Tests
             crmSetting.SettingKey = "setting key";
             crmSetting.StringSetting = "string setting";
             //crmSetting.SystemUserSettingEntityReference = new EntityReference()
+            //crmSetting.BusinessUnitSetting = new EntityReference()
 
             crmSetting.Id = crmSettingManager.Create(crmSetting);
 

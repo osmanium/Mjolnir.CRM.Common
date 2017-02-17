@@ -22,7 +22,12 @@ namespace Mjolnir.CRM.Common.EntityManagers
             public const string BoolSetting = "mjolnir_boolsetting";
             public const string DateTimeSetting = "mjolnir_datetimesetting";
 
+
+            public const string BusinessUnitSettingEntityReference = "mjolnir_crmSettingManager";
             public const string SystemUserSettingEntityReference = "mjolnir_systemusersetting";
+
+            public const string TraceLevelSettingOptionSet = "mjolnir_crmtracelevelsetting";
+
         }
     }
 
@@ -44,7 +49,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
                 Attributes[EntityAttributes.CrmSettingEntityAttributes.SettingKey] = value;
             }
         }
-
+        
         public int IntSetting
         {
             get
@@ -126,6 +131,30 @@ namespace Mjolnir.CRM.Common.EntityManagers
             set
             {
                 Attributes[EntityAttributes.CrmSettingEntityAttributes.SystemUserSettingEntityReference] = value;
+            }
+        }
+
+        public int BusinessUnitSetting
+        {
+            get
+            {
+                return GetIntigerAttributeValue(EntityAttributes.CrmSettingEntityAttributes.BusinessUnitSettingEntityReference);
+            }
+            set
+            {
+                Attributes[EntityAttributes.CrmSettingEntityAttributes.BusinessUnitSettingEntityReference] = value;
+            }
+        }
+
+        public OptionSetValue TraceLevelSettingOptionSet
+        {
+            get
+            {
+                return GetOptionSetValueAttributeValue(EntityAttributes.CrmSettingEntityAttributes.TraceLevelSettingOptionSet);
+            }
+            set
+            {
+                Attributes[EntityAttributes.CrmSettingEntityAttributes.TraceLevelSettingOptionSet] = value;
             }
         }
     }
