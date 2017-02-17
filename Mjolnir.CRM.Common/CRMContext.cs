@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
-using Mjolnir.CRM.Common.Tracers;
+using Mjolnir.CRM.Common.EntityManagers;
+using Mjolnir.CRM.Common.Loggers;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,22 +12,27 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common
 {
-    public class CrmContext
+    public class CrmContext : IDisposable
     {
-        public BaseTracer TracingService { get; private set; }
+        public CrmLogger TracingService { get; private set; }
         public IPluginExecutionContext PluginExecutionContext { get; private set; }
-        public OrganizationServiceProxy OrganizationService { get; private set; }
+        public IOrganizationService OrganizationService { get; private set; }
         public IServiceProvider ServiceProvider { get; private set; }
 
         public Guid UserId { get; private set; }
 
+        public bool IsPlugin { get { return PluginExecutionContext != null; } }
+
         public TraceLevel TraceLevel { get; }
 
-        public CrmContext(OrganizationServiceProxy OrganizationService, Guid UserId,
-            BaseTracer TracingService, 
+        public static readonly ConcurrentDictionary<Guid, Dictionary<string, CrmSettingEntity>> CrmSettings = new ConcurrentDictionary<Guid, Dictionary<string, CrmSettingEntity>>();
+
+
+        public CrmContext(IOrganizationService OrganizationService, Guid UserId,
+            CrmLogger TracingService, 
             IPluginExecutionContext PluginExecutionContext = null, 
             IServiceProvider ServiceProvider = null,
-            TraceLevel TraceLevel = TraceLevel.Warning)
+            TraceLevel TraceLevel = TraceLevel.Off)
         {
             this.TracingService = TracingService;
             this.PluginExecutionContext = PluginExecutionContext;
@@ -33,6 +40,11 @@ namespace Mjolnir.CRM.Common
             this.ServiceProvider = ServiceProvider;
             this.UserId = UserId;
             this.TraceLevel = TraceLevel;
+        }
+
+        public void Dispose()
+        {
+            OrganizationService = null;
         }
     }
 }

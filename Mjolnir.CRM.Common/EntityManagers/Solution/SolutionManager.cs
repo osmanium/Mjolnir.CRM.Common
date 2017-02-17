@@ -1,8 +1,10 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using Mjolnir.CRM.Common.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +43,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
         {
             try
             {
-                context.TracingService.Trace("GetAllSolutions started.");
+                context.TracingService.TraceVerbose("GetAllSolutions started.");
 
                 string[] retrieveSolutionColumns = new string[] {
                     EntityAttributes.SolutionEntityAttributes.FriendlyNameFieldName,
@@ -66,7 +68,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public string GetUniqueSolutionName(Entity solution)
         {
-            context.TracingService.Trace("GetUniqueSolutionName started.");
+            context.TracingService.TraceVerbose("GetUniqueSolutionName started.");
 
             try
             {
@@ -86,7 +88,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public bool IsPatchSolution(Entity solution)
         {
-            context.TracingService.Trace("IsPatchSolution started.");
+            context.TracingService.TraceVerbose("IsPatchSolution started.");
 
             try
             {
@@ -105,7 +107,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public bool IsManagedSolution(Entity solution)
         {
-            context.TracingService.Trace("IsManagedSolution started.");
+            context.TracingService.TraceVerbose("IsManagedSolution started.");
 
             try
             {
@@ -124,7 +126,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public bool UpdateSolutionVersion(Entity solution, Version newVersion)
         {
-            context.TracingService.Trace("UpdateSolutionVersion started.");
+            context.TracingService.TraceVerbose("UpdateSolutionVersion started.");
 
             var result = false;
 
@@ -146,7 +148,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public bool IsPatchSolutionBySolutionId(Guid solutionId)
         {
-            context.TracingService.Trace("IsPatchSolutionBySolutionId started.");
+            context.TracingService.TraceVerbose("IsPatchSolutionBySolutionId started.");
 
             var result = false;
 
@@ -165,7 +167,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public EntityReference GetParentSolutionReference(Entity solution)
         {
-            context.TracingService.Trace("GetParentSolutionReference started.");
+            context.TracingService.TraceVerbose("GetParentSolutionReference started.");
 
             try
             {
@@ -185,7 +187,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public CloneAsSolutionResponse CloneAsSolution(Entity solution)
         {
-            context.TracingService.Trace("CloneAsSolution started.");
+            context.TracingService.TraceVerbose("CloneAsSolution started.");
 
             try
             {
@@ -208,7 +210,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public Entity GetSolutionById(Guid solutionId)
         {
-            context.TracingService.Trace("GetSolutionById started.");
+            context.TracingService.TraceVerbose("GetSolutionById started.");
 
             try
             {
@@ -223,7 +225,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public Guid GetSolutionIdByUniqueSolutionName(string uniqueSolutionName)
         {
-            context.TracingService.Trace("GetSolutionIdByUniqueSolutionName started.");
+            context.TracingService.TraceVerbose("GetSolutionIdByUniqueSolutionName started.");
 
             try
             {
@@ -253,7 +255,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public EntityCollection GetPatchesBySolutionId(Guid solutionId)
         {
-            context.TracingService.Trace("GetPatchesBySolutionId started.");
+            context.TracingService.TraceVerbose("GetPatchesBySolutionId started.");
 
             try
             {
@@ -280,7 +282,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public Entity CreateSolution(Guid publisherId, string friendlyName, string description, Version version)
         {
-            context.TracingService.Trace("CreateSolution started.");
+            context.TracingService.TraceVerbose("CreateSolution started.");
 
             try
             {
@@ -309,7 +311,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public EntityCollection RetrieveSolutionComponents(Entity patch)
         {
-            context.TracingService.Trace("RetrieveSolutionComponents started.");
+            context.TracingService.TraceVerbose("RetrieveSolutionComponents started.");
 
             try
             {
@@ -347,7 +349,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public void CopySolutionComponents(Entity newSolution, EntityCollection solutionComponentsEntityCollection)
         {
-            context.TracingService.Trace("CopySolutionComponents started.");
+            context.TracingService.TraceVerbose("CopySolutionComponents started.");
 
             //TODO : May throw error for duplicate, check this scenario
 
@@ -373,8 +375,8 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
                         if (component.Contains(EntityAttributes.SolutionComponentEntityAttributes.RootComponentBehavior))
                         {
-                            var behaviour = (Constants.SolutionComponentRootComponentBehavior)component.GetAttributeValue<OptionSetValue>(EntityAttributes.SolutionComponentEntityAttributes.RootComponentBehavior).Value;
-                            if (behaviour == Constants.SolutionComponentRootComponentBehavior.Donotincludesubcomponents && isMetadata == true)
+                            var behaviour = (SolutionComponentRootComponentBehavior)component.GetAttributeValue<OptionSetValue>(EntityAttributes.SolutionComponentEntityAttributes.RootComponentBehavior).Value;
+                            if (behaviour == SolutionComponentRootComponentBehavior.Donotincludesubcomponents && isMetadata == true)
                             {
                                 addSolutionComponentRequest.DoNotIncludeSubcomponents = true;
                             }
@@ -385,7 +387,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
                 }
                 else
                 {
-                    context.TracingService.Trace("No component found for transferring.");
+                    context.TracingService.TraceVerbose("No component found for transferring.");
                 }
 
             }
@@ -397,7 +399,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public bool IsPatchInDescription(Entity solution)
         {
-            context.TracingService.Trace("IsPatchInDescription started.");
+            context.TracingService.TraceVerbose("IsPatchInDescription started.");
 
             try
             {
@@ -421,7 +423,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public bool IsUpgradeForSolution(string parentSolutionUniqueName, Entity solution)
         {
-            context.TracingService.Trace("IsUpgradeForSolution started.");
+            context.TracingService.TraceVerbose("IsUpgradeForSolution started.");
 
             try
             {
@@ -436,7 +438,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
                         return true;
                     }
                     else
-                        context.TracingService.Trace("Solution Name : " + parentSolutionUniqueName);
+                        context.TracingService.TraceVerbose("Solution Name : " + parentSolutionUniqueName);
                 }
             }
             catch (Exception ex)
@@ -453,7 +455,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public void RemoveSolutions(List<Guid> solutionIds)
         {
-            context.TracingService.Trace("RemoveSolutions started.");
+            context.TracingService.TraceVerbose("RemoveSolutions started.");
 
             foreach (var solutionId in solutionIds)
             {
@@ -470,7 +472,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public EntityCollection GetSolutionUpgrades(Entity parentSolution)
         {
-            context.TracingService.Trace("GetSolutionUpgrades started.");
+            context.TracingService.TraceVerbose("GetSolutionUpgrades started.");
 
             var upgradeSolutions = new EntityCollection();
             var sortedUpgradeSolutions = new EntityCollection();
@@ -484,7 +486,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
                 if (IsPatchInDescription(solution) && IsUpgradeForSolution(parentSolutionName, solution))
                 {
-                    context.TracingService.Trace("Upgrade Solution : " + GetUniqueSolutionName(solution));
+                    context.TracingService.TraceVerbose("Upgrade Solution : " + GetUniqueSolutionName(solution));
                     upgradeSolutions.Entities.Add(solution);
                 }
             }
@@ -500,7 +502,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public Guid CreatePatchForBaseSolution(Entity parentSolution, Entity upgradeSolution)
         {
-            context.TracingService.Trace("CreatePatchForBaseSolution started.");
+            context.TracingService.TraceVerbose("CreatePatchForBaseSolution started.");
 
             //Get the version of patch and create a real patch with the same version
             Version patchVersion = GetSolutionVersion(upgradeSolution);
@@ -525,7 +527,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         private Version GetPatchVersionInDescription(Entity upgradeSolution)
         {
-            context.TracingService.Trace("GetPatchVersionInDescription started.");
+            context.TracingService.TraceVerbose("GetPatchVersionInDescription started.");
 
             try
             {
@@ -543,7 +545,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
                         {
                             string version = versionLine.Substring(("base_solution_verison:").Length).Trim();
 
-                            context.TracingService.Trace("version : " + version);
+                            context.TracingService.TraceVerbose("version : " + version);
 
                             return new Version(version);
                         }
@@ -561,7 +563,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
 
         public Version CalculateNewVersion(Version oldVersion)
         {
-            context.TracingService.Trace("CalculateNewVersion started.");
+            context.TracingService.TraceVerbose("CalculateNewVersion started.");
             return new Version(oldVersion.Major, oldVersion.Minor + 1, 0, 0);
         }
     }

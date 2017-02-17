@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Common
 {
-    public class Constants
+#if DEBUG
+    public class TestPlugin : PluginBase
     {
-       
+        public override void ExecuteInternal(CrmContext pluginContext)
+        {
+        }
     }
+#endif
 }

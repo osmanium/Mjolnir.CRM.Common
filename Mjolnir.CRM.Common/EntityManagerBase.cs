@@ -3,6 +3,7 @@ using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Mjolnir.CRM.Common
 
         public Guid Create(TEntity entity)
         {
-            context.TracingService.Trace("Create started.");
+            context.TracingService.TraceVerbose("Create started.");
 
             try
             {
@@ -57,7 +58,7 @@ namespace Mjolnir.CRM.Common
 
         public TEntity RetrieveById(Guid id, ColumnSet columns = null)
         {
-            context.TracingService.Trace("RetrieveById started.");
+            context.TracingService.TraceVerbose("RetrieveById started.");
 
             if (columns == null || !columns.Columns.Any())
                 columns = new ColumnSet(DefaultFields);
@@ -107,7 +108,7 @@ namespace Mjolnir.CRM.Common
         public void HandleException(Exception ex)
         {
             //TODO : Use trace wrapper
-            context.TracingService.Trace(ex.Message + "\n" + ex.StackTrace + "\n");
+            context.TracingService.TraceError(ex.Message + "\n" + ex.StackTrace + "\n");
         }
     }
 }

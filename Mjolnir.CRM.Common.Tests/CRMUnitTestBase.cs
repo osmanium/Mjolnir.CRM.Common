@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk.Client;
+using Mjolnir.CRM.Common.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,7 +14,7 @@ namespace Mjolnir.CRM.Common.Tests
     public class CrmUnitTestBase
     {
 
-        public CrmContext CRMContext { get; set; }
+        public CrmContext CrmContext { get; set; }
 
         [TestInitialize()]
         public void TestInit()
@@ -25,34 +26,17 @@ namespace Mjolnir.CRM.Common.Tests
             var sourcePort = ConfigurationManager.AppSettings["Port"];
             var sourceOrganizationName = ConfigurationManager.AppSettings["OrganizationName"];
             var sourceUseSSL = Boolean.Parse(ConfigurationManager.AppSettings["UseSSL"]);
+            var timeOutInMinutes = Int32.Parse(ConfigurationManager.AppSettings["TimeOutInMinutes"]);
 
 
-            var _orgService = CrmConnection.ConnectCrm(sourceUserName, sourceServer, sourcePassword, sourceDomain, sourcePort, sourceOrganizationName, sourceUseSSL);
-            if (_orgService == null)
-            {
-                throw new Exception("CRM connection failed");
-            }
-            else
-            {
-                int timeOutInMinutes;
-                if (int.TryParse(ConfigurationManager.AppSettings["TimeOutInMinutes"], out timeOutInMinutes))
-                {
-                    _orgService.Timeout = new TimeSpan(0, timeOutInMinutes, 0);
-                }
-                else
-                {
-                    _orgService.Timeout = new TimeSpan(0, 30, 0);
-                }
-            }
-
-            CRMContext = new CrmContext(_orgService, _orgService.CallerId, new CrmUnitTestTracer(CRMContext), null, null);
+            CrmContext = CrmConnection.ConnectCrm(sourceUserName, sourceServer, sourcePassword, sourceDomain, sourcePort, sourceOrganizationName, sourceUseSSL, timeOutInMinutes);
         }
 
         [TestCleanup]
         public void TestCleanup()
         {
-            if (CRMContext != null && CRMContext.OrganizationService != null)
-                CRMContext.OrganizationService.Dispose();
+            if (CrmContext != null && CrmContext.OrganizationService != null)
+                CrmContext.Dispose();
         }
     }
 }

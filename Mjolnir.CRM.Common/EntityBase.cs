@@ -35,6 +35,20 @@ namespace Mjolnir.CRM.Common
             else return new Money(0);
         }
 
+        public bool GetBoolAttributeValue(string attributeKey)
+        {
+            if (Attributes.ContainsKey(attributeKey))
+                return this.GetAttributeValue<bool>(attributeKey);
+            else return false;
+        }
+
+        public DateTime GetDateTimeAttributeValue(string attributeKey)
+        {
+            if (Attributes.ContainsKey(attributeKey))
+                return this.GetAttributeValue<DateTime>(attributeKey);
+            else return DateTime.MinValue;
+        }
+
         public decimal GetDecimalAttributeValue(string attributeKey)
         {
             if (Attributes.ContainsKey(attributeKey))

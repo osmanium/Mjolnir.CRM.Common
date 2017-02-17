@@ -2,6 +2,7 @@
 using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Mjolnir.CRM.Common.EntityManagers
         {
             try
             {
-                context.TracingService.Trace("GetPublisherByUniqueName started.");
+                context.TracingService.TraceVerbose("GetPublisherByUniqueName started.");
 
                 var result = RetrieveMultipleByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, publisherUniqueName);
 

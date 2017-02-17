@@ -54,8 +54,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CrmSettingManagerTests.cs" />
     <Compile Include="CrmUnitTestBase.cs" />
-    <Compile Include="CrmUnitTestTracer.cs" />
     <Compile Include="PublisherManagerTests.cs" />
     <Compile Include="SolutionManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
