@@ -12,6 +12,8 @@ namespace Mjolnir.CRM.Common.Tests
     [TestClass]
     public class CrmSettingManagerTests : CrmUnitTestBase
     {
+        public const string CRM_SETTING_KEY = "CRM Setting Key";
+
         [TestMethod]
         public void should_create_new_crmsetting()
         {
@@ -23,7 +25,7 @@ namespace Mjolnir.CRM.Common.Tests
             crmSetting.DecimalSetting = 100;
             crmSetting.IntSetting = 100;
             crmSetting.MoneySetting = new Money(100);
-            crmSetting.SettingKey = "setting key";
+            crmSetting.SettingKey = CRM_SETTING_KEY;
             crmSetting.StringSetting = "string setting";
             //crmSetting.SystemUserSettingEntityReference = new EntityReference()
             //crmSetting.BusinessUnitSetting = new EntityReference()
@@ -31,8 +33,22 @@ namespace Mjolnir.CRM.Common.Tests
             crmSetting.Id = crmSettingManager.Create(crmSetting);
 
             Assert.AreNotEqual(Guid.Empty, crmSetting.Id);
+        }
+
+        [TestMethod]
+        public void should_delete_crmsetting()
+        {
+            var crmSettingManager = new CrmSettingEntityManager(CrmContext);
+
+            var crmSetting = crmSettingManager.GetCrmSettingByKey(CRM_SETTING_KEY);
 
             crmSettingManager.Delete(crmSetting.Id);
+
+            var crmSetting_After_Delete = crmSettingManager.GetCrmSettingByKey(CRM_SETTING_KEY);
+
+            Assert.AreNotEqual(null, crmSetting_After_Delete);
         }
+
+        
     }
 }
