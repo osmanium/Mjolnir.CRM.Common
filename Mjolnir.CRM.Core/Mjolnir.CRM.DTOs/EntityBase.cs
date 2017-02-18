@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Core
+namespace Mjolnir.CRM.DTOs
 {
     public class EntityBase : Entity
     {

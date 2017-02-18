@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
 using Mjolnir.CRM.Core.EntityManagers;
+using Mjolnir.CRM.DTOs.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

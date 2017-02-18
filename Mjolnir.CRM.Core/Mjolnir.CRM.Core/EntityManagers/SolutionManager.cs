@@ -2,6 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Mjolnir.CRM.Core.Enums;
+using Mjolnir.CRM.DTOs.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,12 +12,6 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
-    public static partial class EntityAttributes
-    {
-        
-    }
-
-
     public class SolutionManager : EntityManagerBase<SolutionEntity>
     {
         internal override string[] DefaultFields

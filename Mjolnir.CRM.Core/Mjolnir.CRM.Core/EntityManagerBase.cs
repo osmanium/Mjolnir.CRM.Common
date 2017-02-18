@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
+using Mjolnir.CRM.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

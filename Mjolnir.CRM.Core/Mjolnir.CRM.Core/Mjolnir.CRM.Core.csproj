@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Mjolnir.CRM.Core</RootNamespace>
     <AssemblyName>Mjolnir.CRM.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -96,32 +97,30 @@
     <Compile Include="Constants.cs" />
     <Compile Include="CrmBusinessException.cs" />
     <Compile Include="CrmConnection.cs" />
-    <Compile Include="EntityBase.cs" />
     <Compile Include="EntityManagerBase.cs" />
-    <Compile Include="EntityManagers\Contact\ContactEntity.cs" />
-    <Compile Include="EntityManagers\Contact\ContactEntityManager.cs" />
-    <Compile Include="EntityManagers\CrmSetting\CrmSettingEntity.cs" />
-    <Compile Include="EntityManagers\CrmSetting\CrmSettingEntityManager.cs" />
-    <Compile Include="EntityManagers\Publisher\PublisherEntity.cs" />
-    <Compile Include="EntityManagers\Publisher\PublisherManager.cs" />
-    <Compile Include="EntityManagers\SolutionComponent\SolutionComponentEntity.cs" />
-    <Compile Include="EntityManagers\Solution\SolutionEntity.cs" />
+    <Compile Include="EntityManagers\ContactEntityManager.cs" />
+    <Compile Include="EntityManagers\CrmSettingEntityManager.cs" />
+    <Compile Include="EntityManagers\PublisherManager.cs" />
     <Compile Include="Enums\ComponentType.cs" />
     <Compile Include="Enums\CrmSettingType.cs" />
     <Compile Include="Enums\SolutionComponentRootComponentBehavior.cs" />
     <Compile Include="Loggers\CrmExternalLogger.cs" />
-    <Compile Include="PluginBase.cs" />
     <Compile Include="CrmContext.cs" />
+    <Compile Include="PluginBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EntityManagers\Solution\SolutionManager.cs" />
+    <Compile Include="EntityManagers\SolutionManager.cs" />
     <Compile Include="Loggers\CrmLogger.cs" />
-    <Compile Include="TestPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mjolnir.CRM.Core.snk" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Mjolnir.CRM.DTOs\Mjolnir.CRM.DTOs.csproj">
+      <Project>{af5b9d0e-32ac-417d-9bb1-c5606be83117}</Project>
+      <Name>Mjolnir.CRM.DTOs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
