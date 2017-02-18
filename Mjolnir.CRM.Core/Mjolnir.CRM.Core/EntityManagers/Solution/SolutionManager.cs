@@ -1,7 +1,7 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using Mjolnir.CRM.Common.Enums;
+using Mjolnir.CRM.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common.EntityManagers
+namespace Mjolnir.CRM.Core.EntityManagers
 {
     public static partial class EntityAttributes
     {

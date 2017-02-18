@@ -1,13 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
-using Mjolnir.CRM.Common.EntityManagers;
+using Mjolnir.CRM.Core.EntityManagers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common.Tests
+namespace Mjolnir.CRM.Core.Tests
 {
     [TestClass]
     public class CrmSettingManagerTests : CrmUnitTestBase

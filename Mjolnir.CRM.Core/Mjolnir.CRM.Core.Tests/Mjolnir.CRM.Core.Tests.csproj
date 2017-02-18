@@ -6,8 +6,8 @@
     <ProjectGuid>{AEE812F3-61F6-4C6A-8B63-13B4AE8D30AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mjolnir.CRM.Common.Tests</RootNamespace>
-    <AssemblyName>Mjolnir.CRM.Common.Tests</AssemblyName>
+    <RootNamespace>Mjolnir.CRM.Core.Tests</RootNamespace>
+    <AssemblyName>Mjolnir.CRM.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

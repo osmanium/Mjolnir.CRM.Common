@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common.Loggers
+namespace Mjolnir.CRM.Core.Loggers
 {
     public class CrmLogger
     {

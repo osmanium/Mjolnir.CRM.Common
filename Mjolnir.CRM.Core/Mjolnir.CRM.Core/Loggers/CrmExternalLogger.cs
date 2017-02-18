@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk;
 
-namespace Mjolnir.CRM.Common.Loggers
+namespace Mjolnir.CRM.Core.Loggers
 {
     public class CrmExternalTracer : ITracingService
     {

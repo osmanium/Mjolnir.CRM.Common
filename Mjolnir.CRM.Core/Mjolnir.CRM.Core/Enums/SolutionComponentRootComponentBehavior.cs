@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common.Enums
+namespace Mjolnir.CRM.Core.Enums
 {
     [System.Runtime.Serialization.DataContractAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "8.1.0.239")]

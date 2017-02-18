@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
-using Mjolnir.CRM.Common.EntityManagers;
-using Mjolnir.CRM.Common.Loggers;
+using Mjolnir.CRM.Core.EntityManagers;
+using Mjolnir.CRM.Core.Loggers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common
+namespace Mjolnir.CRM.Core
 {
     public class CrmContext : IDisposable
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Tooling.Connector;
-using Mjolnir.CRM.Common.EntityManagers;
-using Mjolnir.CRM.Common.Loggers;
+using Mjolnir.CRM.Core.EntityManagers;
+using Mjolnir.CRM.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common
+namespace Mjolnir.CRM.Core
 {
     public abstract class PluginBase : IPlugin
     {

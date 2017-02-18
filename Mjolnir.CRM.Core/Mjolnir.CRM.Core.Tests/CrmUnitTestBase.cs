@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk.Client;
-using Mjolnir.CRM.Common.Loggers;
+using Mjolnir.CRM.Core.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common.Tests
+namespace Mjolnir.CRM.Core.Tests
 {
     [TestClass]
     public class CrmUnitTestBase

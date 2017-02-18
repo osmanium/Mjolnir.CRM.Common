@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common
+namespace Mjolnir.CRM.Core
 {
     public class CrmBusinessException : Exception
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common.EntityManagers
+namespace Mjolnir.CRM.Core.EntityManagers
 {
     public static partial class EntityAttributes
     {

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.Common
+namespace Mjolnir.CRM.Core
 {
     public abstract class EntityManagerBase<TEntity>
         where TEntity : EntityBase
