@@ -61,9 +61,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mjolnir.CRM.Common\Mjolnir.CRM.Common.csproj">
+    <ProjectReference Include="..\Mjolnir.CRM.Core\Mjolnir.CRM.Core.csproj">
       <Project>{c2d2815e-0618-4daf-9829-c96ad1abf54f}</Project>
-      <Name>Mjolnir.CRM.Common</Name>
+      <Name>Mjolnir.CRM.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mjolnir.CRM.DTOs\Mjolnir.CRM.DTOs.csproj">
+      <Project>{af5b9d0e-32ac-417d-9bb1-c5606be83117}</Project>
+      <Name>Mjolnir.CRM.DTOs</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
