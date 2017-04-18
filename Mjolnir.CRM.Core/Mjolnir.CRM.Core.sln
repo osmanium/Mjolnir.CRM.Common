@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mjolnir.CRM.Core", "Mjolnir.CRM.Core\Mjolnir.CRM.Core.csproj", "{C2D2815E-0618-4DAF-9829-C96AD1ABF54F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mjolnir.CRM.Core.Tests", "Mjolnir.CRM.Core.Tests\Mjolnir.CRM.Core.Tests.csproj", "{AEE812F3-61F6-4C6A-8B63-13B4AE8D30AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mjolnir.CRM.DTOs", "Mjolnir.CRM.DTOs\Mjolnir.CRM.DTOs.csproj", "{AF5B9D0E-32AC-417D-9BB1-C5606BE83117}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mjolnir.CRM.SDK", "Mjolnir.CRM.SDK\Mjolnir.CRM.SDK.csproj", "{AF5B9D0E-32AC-417D-9BB1-C5606BE83117}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

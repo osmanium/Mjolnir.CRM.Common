@@ -5,13 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.DTOs
+namespace Mjolnir.CRM.SDK
 {
     public class EntityBase : Entity
     {
         public EntityBase(string entityName)
             : base(entityName)
         {
+        }
+
+        public Guid GetGuidAttributeValue(string attributeKey)
+        {
+            if (Attributes.ContainsKey(attributeKey))
+                return this.GetAttributeValue<Guid>(attributeKey);
+            else return Guid.Empty;
         }
 
         public string GetStringAttributeValue(string attributeKey)

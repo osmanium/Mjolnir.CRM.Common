@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
-using Mjolnir.CRM.DTOs;
+using Mjolnir.CRM.SDK;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -75,6 +75,15 @@ namespace Mjolnir.CRM.Core
                 return null;
             }
         }
+
+        public TEntity RetrieveById(Guid id, string[] columns = null)
+        {
+            if (columns != null)
+                return RetrieveById(id, new ColumnSet(columns));
+            else
+                return RetrieveById(id, new ColumnSet(DefaultFields));
+        }
+
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, ColumnSet columns = null)
         {
