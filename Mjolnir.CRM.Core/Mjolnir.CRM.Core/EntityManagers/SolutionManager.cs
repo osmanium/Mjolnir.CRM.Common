@@ -2,7 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Mjolnir.CRM.Core.Enums;
-using Mjolnir.CRM.SDK.Entities;
+using Mjolnir.CRM.Sdk.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

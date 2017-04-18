@@ -74,9 +74,6 @@
     <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <HintPath>..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
     </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.2.0\lib\net452\xunit.execution.desktop.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -103,9 +100,9 @@
       <Project>{c2d2815e-0618-4daf-9829-c96ad1abf54f}</Project>
       <Name>Mjolnir.CRM.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mjolnir.CRM.SDK\Mjolnir.CRM.SDK.csproj">
+    <ProjectReference Include="..\Mjolnir.CRM.SDK\Mjolnir.CRM.Sdk.csproj">
       <Project>{af5b9d0e-32ac-417d-9bb1-c5606be83117}</Project>
-      <Name>Mjolnir.CRM.SDK</Name>
+      <Name>Mjolnir.CRM.Sdk</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +110,9 @@
     <None Include="packages.config" />
     <None Include="PublisherManagerOrderedTests.orderedtest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="xunit.runner.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Choose>

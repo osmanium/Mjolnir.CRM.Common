@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using Mjolnir.CRM.SDK.Entities;
-using Mjolnir.CRM.SDK.Optionsets;
+using Mjolnir.CRM.Sdk.Entities;
+using Mjolnir.CRM.Sdk.Optionsets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Data;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
-    public class WebResourceEntityManager : EntityManagerBase<WebResourceEntity>
+    public class WebResourceManager : EntityManagerBase<WebResourceEntity>
     {
         internal override string[] DefaultFields
         {
@@ -28,12 +28,12 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public WebResourceEntityManager(CrmContext context)
+        public WebResourceManager(CrmContext context)
             : base(context, EntityAttributes.WebResourceEntityAttributes.EntityName)
         { }
 
 
-        public List<WebResourceEntity> GetAllWebResourcesMetadata(WebResourceType type)
+        public DataCollection<Entity> GetAllWebResourcesMetadata(WebResourceType type)
         {
             context.TracingService.TraceVerbose("GetAllJavascriptWebResourcesMetadata started.");
 
@@ -41,7 +41,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
             {
                 string[] retrieveColumns = new string[] {
                     EntityAttributes.WebResourceEntityAttributes.Name,
-                    EntityAttributes.WebResourceEntityAttributes.DisplayName
+                    EntityAttributes.WebResourceEntityAttributes.DisplayName,
+                    EntityAttributes.WebResourceEntityAttributes.Description,
+                    EntityAttributes.WebResourceEntityAttributes.WebResourceType
                 };
 
                 QueryExpression query = new QueryExpression(EntityAttributes.WebResourceEntityAttributes.EntityName);
@@ -54,7 +56,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
                 if (result != null && result.Entities.Any())
                 {
-                    return result.Entities.Cast<WebResourceEntity>().ToList();
+                    return result.Entities;
                 }
 
                 return null;
@@ -94,7 +96,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public List<WebResourceEntity> GetWebResourcesContents(WebResourceType type)
+        public DataCollection<Entity> GetWebResourcesContentsByIds(string[] webResourceIds)
         {
             context.TracingService.TraceVerbose("GetAllJavascriptWebResourcesMetadata started.");
 
@@ -102,20 +104,20 @@ namespace Mjolnir.CRM.Core.EntityManagers
             {
                 string[] retrieveColumns = new string[] {
                     EntityAttributes.WebResourceEntityAttributes.Name,
-                    EntityAttributes.WebResourceEntityAttributes.DisplayName
+                    EntityAttributes.WebResourceEntityAttributes.DisplayName,
+                    EntityAttributes.WebResourceEntityAttributes.Content
                 };
 
                 QueryExpression query = new QueryExpression(EntityAttributes.WebResourceEntityAttributes.EntityName);
                 query.ColumnSet = new ColumnSet(retrieveColumns);
 
-                if (type != WebResourceType.All)
-                    query.Criteria.AddCondition(new ConditionExpression(EntityAttributes.WebResourceEntityAttributes.WebResourceType, ConditionOperator.Equal, (int)type));
+                query.Criteria.AddCondition(EntityAttributes.WebResourceEntityAttributes.IdFieldName, ConditionOperator.In,  webResourceIds );
 
                 var result = context.OrganizationService.RetrieveMultiple(query);
 
                 if (result != null && result.Entities.Any())
                 {
-                    return result.Entities.Cast<WebResourceEntity>().ToList();
+                    return result.Entities;
                 }
 
                 return null;

@@ -1,4 +1,4 @@
-﻿using Mjolnir.CRM.SDK.Entities;
+﻿using Mjolnir.CRM.Sdk.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

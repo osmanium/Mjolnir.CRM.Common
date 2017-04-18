@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.SDK.Optionsets
+namespace Mjolnir.CRM.Sdk.Optionsets
 {
 
     //Webpage(HTML) - .htm, .html - 1

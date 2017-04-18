@@ -2,7 +2,7 @@
 using Microsoft.Xrm.Sdk.Client;
 using Mjolnir.CRM.Core.EntityManagers;
 using Mjolnir.CRM.Core.Loggers;
-using Mjolnir.CRM.SDK.Entities;
+using Mjolnir.CRM.Sdk.Entities;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

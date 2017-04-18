@@ -23,6 +23,7 @@ namespace Mjolnir.CRM.Core
             var organizationServiceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
             var organizationService = organizationServiceFactory.CreateOrganizationService(pluginExecutionContext.UserId);
             var tracingService = new CrmLogger((ITracingService)serviceProvider.GetService(typeof(ITracingService)));
+            
 
             this.PluginContext = new CrmContext(organizationService, pluginExecutionContext.UserId, tracingService, pluginExecutionContext, serviceProvider);
 

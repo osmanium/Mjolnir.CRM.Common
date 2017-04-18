@@ -7,17 +7,15 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Mjolnir.CRM.Core.Tests
 {
-    [TestClass]
     public class CrmUnitTestBase
     {
-
         public CrmContext CrmContext { get; set; }
-
-        [TestInitialize()]
-        public void TestInit()
+        
+        public  CrmUnitTestBase()
         {
             var sourceUserName = ConfigurationManager.AppSettings["Username"];
             var sourceServer = ConfigurationManager.AppSettings["Server"];
@@ -30,13 +28,6 @@ namespace Mjolnir.CRM.Core.Tests
 
 
             CrmContext = CrmConnection.ConnectCrm(sourceUserName, sourceServer, sourcePassword, sourceDomain, sourcePort, sourceOrganizationName, sourceUseSSL, timeOutInMinutes);
-        }
-
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            if (CrmContext != null && CrmContext.OrganizationService != null)
-                CrmContext.Dispose();
         }
     }
 }

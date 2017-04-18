@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.SDK
+namespace Mjolnir.CRM.Sdk
 {
     public class EntityBase : Entity
     {
@@ -13,6 +13,8 @@ namespace Mjolnir.CRM.SDK
             : base(entityName)
         {
         }
+
+        #region GetAttribute Helpers
 
         public Guid GetGuidAttributeValue(string attributeKey)
         {
@@ -75,6 +77,7 @@ namespace Mjolnir.CRM.SDK
             if (Attributes.ContainsKey(attributeKey))
                 return this.GetAttributeValue<OptionSetValue>(attributeKey);
             else return null;
-        }
+        } 
+        #endregion
     }
 }

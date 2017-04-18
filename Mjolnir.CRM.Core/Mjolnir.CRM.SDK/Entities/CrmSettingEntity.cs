@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mjolnir.CRM.SDK.Entities
+namespace Mjolnir.CRM.Sdk.Entities
 {
     public static partial class EntityAttributes
     {
@@ -23,7 +23,7 @@ namespace Mjolnir.CRM.SDK.Entities
             public const string DateTimeSetting = "mjolnir_datetimesetting";
 
 
-            public const string BusinessUnitSettingEntityReference = "mjolnir_crmSettingManager";
+            public const string BusinessUnitSettingEntityReference = "mjolnir_businessunitsetting";
             public const string SystemUserSettingEntityReference = "mjolnir_systemusersetting";
 
             public const string TraceLevelSettingOptionSet = "mjolnir_crmtracelevelsetting";

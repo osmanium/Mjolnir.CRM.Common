@@ -18,21 +18,17 @@ namespace Mjolnir.CRM.Core
         public static CrmContext ConnectCrm(string userName, string serverName, string password, string domain, string port, string organization, bool useSSL, int timeOutInMinutes)
         {
             CrmServiceClient _sourceCRMServiceClient = new CrmServiceClient(new NetworkCredential(userName, password, domain), serverName, port, organization, true, useSSL, null);
-
-            UpdateTimeOutSetting(timeOutInMinutes, _sourceCRMServiceClient);
-
+            
             CrmContext crmContext = new CrmContext(_sourceCRMServiceClient.OrganizationServiceProxy,
                                   _sourceCRMServiceClient.OrganizationServiceProxy.CallerId,
                                   new CrmLogger(new CrmExternalTracer()),
                                   null,
                                   null);
-
-            UpdateTraceSetting(crmContext);
-
+            
             return crmContext;
         }
 
-        private static void UpdateTraceSetting(CrmContext crmContext)
+        public static void UpdateTraceSettingFromCRM(CrmContext crmContext)
         {
             //Get trace configurations
             var crmSettingEntityManager = new CrmSettingEntityManager(crmContext);
@@ -49,9 +45,9 @@ namespace Mjolnir.CRM.Core
             }
         }
 
-        private static void UpdateTimeOutSetting(int timeOutInMinutes, CrmServiceClient _sourceCRMServiceClient)
+        public static void UpdateTimeOutSetting(int timeOutInMinutes, OrganizationServiceProxy organizationServiceProxy)
         {
-            if (_sourceCRMServiceClient.OrganizationServiceProxy == null)
+            if (organizationServiceProxy == null)
             {
                 throw new CrmBusinessException("CRM connection failed.");
             }
@@ -59,11 +55,11 @@ namespace Mjolnir.CRM.Core
             {
                 if (timeOutInMinutes > 0)
                 {
-                    _sourceCRMServiceClient.OrganizationServiceProxy.Timeout = new TimeSpan(0, timeOutInMinutes, 0);
+                    organizationServiceProxy.Timeout = new TimeSpan(0, timeOutInMinutes, 0);
                 }
                 else
                 {
-                    _sourceCRMServiceClient.OrganizationServiceProxy.Timeout = new TimeSpan(0, 10, 0);
+                    organizationServiceProxy.Timeout = new TimeSpan(0, 10, 0);
                 }
             }
         }

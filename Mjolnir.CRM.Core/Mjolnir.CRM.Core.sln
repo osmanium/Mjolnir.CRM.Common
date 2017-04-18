@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mjolnir.CRM.Core", "Mjolnir
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mjolnir.CRM.Core.Tests", "Mjolnir.CRM.Core.Tests\Mjolnir.CRM.Core.Tests.csproj", "{AEE812F3-61F6-4C6A-8B63-13B4AE8D30AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mjolnir.CRM.SDK", "Mjolnir.CRM.SDK\Mjolnir.CRM.SDK.csproj", "{AF5B9D0E-32AC-417D-9BB1-C5606BE83117}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mjolnir.CRM.Sdk", "Mjolnir.CRM.SDK\Mjolnir.CRM.Sdk.csproj", "{AF5B9D0E-32AC-417D-9BB1-C5606BE83117}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
