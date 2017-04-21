@@ -48,5 +48,17 @@ namespace Mjolnir.CRM.Core.Tests
             );
         }
 
+        [TestMethod]
+        public void should_retrieve_webresource_by_name()
+        {
+            var webResourceManager = new WebResourceManager(CrmContext);
+            
+            var result = webResourceManager.GetWebResourceBySchemaName("cc_MscrmControls.Multimedia.MultimediaPlayerControl/libs/jquery_2.1.1.js");
+
+            result.ShouldSatisfyAllConditions(
+                () => result.ShouldNotBeNull()
+            );
+        }
+        
     }
 }

@@ -73,6 +73,8 @@
     <Compile Include="Entities\SolutionEntity.cs" />
     <Compile Include="Entities\WebResourceEntity.cs" />
     <Compile Include="EntityBase.cs" />
+    <Compile Include="Extensions\EntityCollectionExtensions.cs" />
+    <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Optionsets\WebResourceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

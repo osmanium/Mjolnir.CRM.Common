@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mjolnir.CRM.Sdk.Extensions;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
@@ -37,8 +38,8 @@ namespace Mjolnir.CRM.Core.EntityManagers
         {
             var settings = RetrieveMultipleByAttributeExactValue(EntityAttributes.CrmSettingEntityAttributes.SettingKey, key);
 
-            if (settings != null)
-                return settings.Entities.First().ToEntity<CrmSettingEntity>();
+            if (settings != null && settings.Entities.Any())
+                return settings.Entities.First().ToGenericEntity<CrmSettingEntity>();
 
             return null;
         }

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mjolnir.CRM.Sdk.Extensions;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
@@ -33,7 +34,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
         }
 
 
-        public Entity GetPublisherByUniqueName(string publisherUniqueName)
+        public PublisherEntity GetPublisherByUniqueName(string publisherUniqueName)
         {
             try
             {
@@ -42,7 +43,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 var result = RetrieveMultipleByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, publisherUniqueName);
 
                 if (result != null && result.Entities.Any())
-                    return result.Entities.FirstOrDefault();
+                    return result.Entities.First().ToGenericEntity<PublisherEntity>();
 
                 return null;
             }

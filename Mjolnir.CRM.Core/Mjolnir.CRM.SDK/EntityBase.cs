@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace Mjolnir.CRM.Sdk
             : base(entityName)
         {
         }
-
+        
         #region GetAttribute Helpers
 
         public Guid GetGuidAttributeValue(string attributeKey)
@@ -79,5 +80,6 @@ namespace Mjolnir.CRM.Sdk
             else return null;
         } 
         #endregion
+
     }
 }

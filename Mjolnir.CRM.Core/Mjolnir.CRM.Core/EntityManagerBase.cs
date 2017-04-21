@@ -8,11 +8,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mjolnir.CRM.Sdk.Extensions;
 
 namespace Mjolnir.CRM.Core
 {
     public abstract class EntityManagerBase<TEntity>
-        where TEntity : EntityBase
+        where TEntity : EntityBase, new()
     {
         internal CrmContext context = null;
         internal string entityLogicalName = string.Empty;
@@ -66,7 +67,7 @@ namespace Mjolnir.CRM.Core
 
             try
             {
-                return context.OrganizationService.Retrieve(entityLogicalName, id, columns).ToEntity<TEntity>();
+                return context.OrganizationService.Retrieve(entityLogicalName, id, columns).ToGenericEntity<TEntity>();
 
             }
             catch (Exception ex)
@@ -84,6 +85,15 @@ namespace Mjolnir.CRM.Core
                 return RetrieveById(id, new ColumnSet(DefaultFields));
         }
 
+        public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value)
+        {
+            return RetrieveMultipleByAttributeExactValue(attributeName, value, DefaultFields);
+        }
+
+        public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, string[] columns = null)
+        {
+            return RetrieveMultipleByAttributeExactValue(attributeName, value, new ColumnSet(columns));
+        }
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, ColumnSet columns = null)
         {
@@ -91,11 +101,10 @@ namespace Mjolnir.CRM.Core
             if (columns == null || !columns.Columns.Any())
                 columns = new ColumnSet(DefaultFields);
 
-            QueryExpression query = new QueryExpression(entityLogicalName);
-            query.ColumnSet = columns;
-            query.Criteria.AddCondition(new ConditionExpression(attributeName, ConditionOperator.Equal, value));
-
-            return context.OrganizationService.RetrieveMultiple(query);
+            return RetrieveMultiple(new List<ConditionExpression>
+                         {
+                            new ConditionExpression(attributeName, ConditionOperator.Equal, value)
+                         }, columns);
         }
 
         public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, ColumnSet columns = null)
@@ -114,6 +123,10 @@ namespace Mjolnir.CRM.Core
             return context.OrganizationService.RetrieveMultiple(query);
         }
 
+        public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, string[] columns = null)
+        {
+            return RetrieveMultiple(conditions, new ColumnSet(columns));
+        }
 
 
         public void HandleException(Exception ex)

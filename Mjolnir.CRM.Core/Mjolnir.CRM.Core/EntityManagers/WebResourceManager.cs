@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using Mjolnir.CRM.Sdk.Extensions;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
@@ -33,7 +34,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
         { }
 
 
-        public DataCollection<Entity> GetAllWebResourcesMetadata(WebResourceType type)
+        public List<WebResourceEntity> GetAllWebResourcesMetadata(WebResourceType type)
         {
             context.TracingService.TraceVerbose("GetAllJavascriptWebResourcesMetadata started.");
 
@@ -56,7 +57,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
                 if (result != null && result.Entities.Any())
                 {
-                    return result.Entities;
+                    return result.Entities.Select(s => s.ToGenericEntity<WebResourceEntity>()).ToList();
                 }
 
                 return null;
@@ -96,7 +97,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public DataCollection<Entity> GetWebResourcesContentsByIds(string[] webResourceIds)
+        public List<WebResourceEntity> GetWebResourcesContentsByIds(string[] webResourceIds)
         {
             context.TracingService.TraceVerbose("GetAllJavascriptWebResourcesMetadata started.");
 
@@ -111,13 +112,13 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 QueryExpression query = new QueryExpression(EntityAttributes.WebResourceEntityAttributes.EntityName);
                 query.ColumnSet = new ColumnSet(retrieveColumns);
 
-                query.Criteria.AddCondition(EntityAttributes.WebResourceEntityAttributes.IdFieldName, ConditionOperator.In,  webResourceIds );
+                query.Criteria.AddCondition(EntityAttributes.WebResourceEntityAttributes.IdFieldName, ConditionOperator.In, webResourceIds);
 
                 var result = context.OrganizationService.RetrieveMultiple(query);
 
                 if (result != null && result.Entities.Any())
                 {
-                    return result.Entities;
+                    return result.Entities.Select(s => s.ToGenericEntity<WebResourceEntity>()).ToList();
                 }
 
                 return null;
@@ -127,6 +128,16 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 HandleException(ex);
                 return null;
             }
+        }
+
+        public WebResourceEntity GetWebResourceBySchemaName(string webResourceSchemaName)
+        {
+            var results = RetrieveMultipleByAttributeExactValue(EntityAttributes.WebResourceEntityAttributes.Name, webResourceSchemaName);
+
+            if (results != null && results.Entities.Any())
+                return results.Entities.First().ToGenericEntity<WebResourceEntity>();
+
+            return null;
         }
 
     }

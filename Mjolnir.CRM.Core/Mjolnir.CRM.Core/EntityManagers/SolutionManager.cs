@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mjolnir.CRM.Sdk.Extensions;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
@@ -34,7 +35,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
         { }
 
 
-       public EntityCollection GetAllSolutions()
+        public List<SolutionEntity> GetAllSolutions()
         {
             try
             {
@@ -52,7 +53,8 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 QueryExpression query = new QueryExpression(EntityAttributes.SolutionEntityAttributes.EntityName);
                 query.ColumnSet = new ColumnSet(retrieveSolutionColumns);
 
-                return context.OrganizationService.RetrieveMultiple(query);
+                return RetrieveMultiple(null, retrieveSolutionColumns)
+                           .ToList<SolutionEntity>();
             }
             catch (Exception ex)
             {
@@ -149,7 +151,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
             try
             {
-                var solution = GetSolutionById(solutionId);
+                var solution = RetrieveById(solutionId, new ColumnSet(true));
                 result = IsPatchSolution(solution);
 
             }
@@ -203,21 +205,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public Entity GetSolutionById(Guid solutionId)
-        {
-            context.TracingService.TraceVerbose("GetSolutionById started.");
-
-            try
-            {
-                return context.OrganizationService.Retrieve(EntityAttributes.SolutionEntityAttributes.EntityName, solutionId, new ColumnSet(true));
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
-                return null;
-            }
-        }
-
+        
         public Guid GetSolutionIdByUniqueSolutionName(string uniqueSolutionName)
         {
             context.TracingService.TraceVerbose("GetSolutionIdByUniqueSolutionName started.");
@@ -248,7 +236,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public EntityCollection GetPatchesBySolutionId(Guid solutionId)
+        public List<SolutionEntity> GetPatchesBySolutionId(Guid solutionId)
         {
             context.TracingService.TraceVerbose("GetPatchesBySolutionId started.");
 
@@ -261,12 +249,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
                     EntityAttributes.SolutionEntityAttributes.VersionFieldName,
                     EntityAttributes.SolutionEntityAttributes.IsManagedFieldName
                 };
-
-                QueryExpression query = new QueryExpression(EntityAttributes.SolutionEntityAttributes.EntityName);
-                query.ColumnSet = new ColumnSet(retrieveSolutionColumns);
-                query.Criteria.AddCondition(EntityAttributes.SolutionEntityAttributes.ParentSolutionIdFieldName, ConditionOperator.Equal, solutionId);
-
-                return context.OrganizationService.RetrieveMultiple(query);
+                
+                return RetrieveMultipleByAttributeExactValue(EntityAttributes.SolutionEntityAttributes.ParentSolutionIdFieldName, solutionId, retrieveSolutionColumns)
+                            .ToList<SolutionEntity>();
             }
             catch (Exception ex)
             {
@@ -275,7 +260,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public Entity CreateSolution(Guid publisherId, string friendlyName, string description, Version version)
+        public SolutionEntity CreateSolution(Guid publisherId, string friendlyName, string description, Version version)
         {
             context.TracingService.TraceVerbose("CreateSolution started.");
 
@@ -295,7 +280,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 var newSolutionId = this.context.OrganizationService.Create(solution);
                 solution.Attributes[EntityAttributes.SolutionEntityAttributes.IdFieldName] = newSolutionId;
 
-                return solution;
+                return solution.ToGenericEntity<SolutionEntity>();
             }
             catch (Exception ex)
             {
@@ -304,7 +289,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public EntityCollection RetrieveSolutionComponents(Entity patch)
+        public List<SolutionComponentEntity> RetrieveSolutionComponents(Entity patch)
         {
             context.TracingService.TraceVerbose("RetrieveSolutionComponents started.");
 
@@ -320,20 +305,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
                     EntityAttributes.SolutionComponentEntityAttributes.IsMetadata,
                     EntityAttributes.SolutionComponentEntityAttributes.RootComponentBehavior,
                 };
-
-
-                QueryExpression query = new QueryExpression(EntityAttributes.SolutionComponentEntityAttributes.EntityName);
-                query.ColumnSet = new ColumnSet(retrieveSolutionComponentColumns);
-                query.Criteria.AddCondition(EntityAttributes.SolutionComponentEntityAttributes.SolutionId, ConditionOperator.Equal, new object[] { patchSolutionId });
-
-                var solutionComponentsEntityCollection = context.OrganizationService.RetrieveMultiple(query);
-
-                if (solutionComponentsEntityCollection != null && solutionComponentsEntityCollection.Entities.Any())
-                {
-                    return solutionComponentsEntityCollection;
-                }
-
-                return null;
+                
+                return RetrieveMultipleByAttributeExactValue(EntityAttributes.SolutionComponentEntityAttributes.SolutionId, new object[] { patchSolutionId }, retrieveSolutionComponentColumns)
+                    .ToList<SolutionComponentEntity>();
             }
             catch (Exception ex)
             {
@@ -475,7 +449,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             var allSolutions = GetAllSolutions();
             var parentSolutionName = GetUniqueSolutionName(parentSolution);
 
-            foreach (var solution in allSolutions.Entities)
+            foreach (var solution in allSolutions)
             {
                 //context.TracingService.Trace("\n====\n" + solution.GetAttributeValue<string>(EntityAttributes.SolutionEntityAttributes.Description) + "\n====\n");
 

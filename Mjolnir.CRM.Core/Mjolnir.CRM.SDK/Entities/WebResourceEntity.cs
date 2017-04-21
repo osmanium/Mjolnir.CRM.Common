@@ -20,7 +20,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             public const string WebResourceType = "webresourcetype";
         }
     }
-
+    
     public class WebResourceEntity : EntityBase
     {
         public WebResourceEntity()
