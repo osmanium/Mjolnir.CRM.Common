@@ -44,7 +44,7 @@ namespace Mjolnir.CRM.Core.Tests
             var publishers = publisherManager.RetrieveMultipleByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, PUBLISHER_UNIQUE_NAME);
 
             //Delete publisher
-            publisherManager.Delete(publishers.Entities.First().Id);
+            publisherManager.DeleteById(publishers.Entities.First().Id);
 
             //Try to get deleted publisher
             var publisher_after_delete = publisherManager.RetrieveMultipleByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, PUBLISHER_UNIQUE_NAME); publisherManager.RetrieveMultipleByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, PUBLISHER_UNIQUE_NAME); 

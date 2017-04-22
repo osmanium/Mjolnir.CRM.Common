@@ -13,6 +13,8 @@ using Mjolnir.CRM.Sdk.Extensions;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
+    //TODO : Do not use Entity as input or output, use real entity type
+
     public class SolutionManager : EntityManagerBase<SolutionEntity>
     {
         internal override string[] DefaultFields

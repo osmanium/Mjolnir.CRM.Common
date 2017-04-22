@@ -43,7 +43,7 @@ namespace Mjolnir.CRM.Core.Tests
 
             var crmSetting = crmSettingManager.GetCrmSettingByKey(CRM_SETTING_KEY);
 
-            crmSettingManager.Delete(crmSetting.Id);
+            crmSettingManager.DeleteById(crmSetting.Id);
 
             var crmSetting_After_Delete = crmSettingManager.GetCrmSettingByKey(CRM_SETTING_KEY);
 

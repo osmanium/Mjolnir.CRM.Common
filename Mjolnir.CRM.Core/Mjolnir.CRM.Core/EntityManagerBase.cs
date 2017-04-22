@@ -48,17 +48,60 @@ namespace Mjolnir.CRM.Core
             }
         }
 
-        public void Delete(Guid id)
+        public void DeleteById(Guid id)
         {
             context.OrganizationService.Delete(entityLogicalName, id);
         }
+
+        /// <summary>
+        /// This method should be used only for small amount of data, pager is not implemented, works only for initial page of data.
+        /// </summary>
+        /// <returns>
+        /// Failed Records
+        /// </returns>
+        /// <param name="conditions"></param>
+        public EntityCollection DeleteMultipleByConditions(List<ConditionExpression> conditions)
+        {
+            EntityCollection failedRecords = new EntityCollection();
+
+            var recordsToBeDeleted = RetrieveMultiple(conditions);
+
+            if (recordsToBeDeleted != null && recordsToBeDeleted.Entities.Any())
+            {
+                foreach (var record in recordsToBeDeleted.Entities)
+                {
+                    try
+                    {
+                        context.OrganizationService.Delete(entityLogicalName, record.Id);
+                    }
+                    catch (Exception)
+                    {
+                        failedRecords.Entities.Add(record);
+                    }
+                }
+            }
+
+            return failedRecords;
+        }
+
 
         public void Update(TEntity entity)
         {
             context.OrganizationService.Update(entity);
         }
 
-        public TEntity RetrieveById(Guid id, ColumnSet columns = null)
+
+        public TEntity RetrieveById(Guid id)
+        {
+            return RetrieveById(id, DefaultFields);
+        }
+
+        public TEntity RetrieveById(Guid id, string[] columns)
+        {
+            return RetrieveById(id, new ColumnSet(columns));
+        }
+
+        public TEntity RetrieveById(Guid id, ColumnSet columns)
         {
             context.TracingService.TraceVerbose("RetrieveById started.");
 
@@ -77,25 +120,18 @@ namespace Mjolnir.CRM.Core
             }
         }
 
-        public TEntity RetrieveById(Guid id, string[] columns = null)
-        {
-            if (columns != null)
-                return RetrieveById(id, new ColumnSet(columns));
-            else
-                return RetrieveById(id, new ColumnSet(DefaultFields));
-        }
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value)
         {
             return RetrieveMultipleByAttributeExactValue(attributeName, value, DefaultFields);
         }
 
-        public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, string[] columns = null)
+        public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, string[] columns)
         {
             return RetrieveMultipleByAttributeExactValue(attributeName, value, new ColumnSet(columns));
         }
 
-        public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, ColumnSet columns = null)
+        public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, ColumnSet columns)
         {
             //TODO : Verbose trace
             if (columns == null || !columns.Columns.Any())
@@ -107,7 +143,18 @@ namespace Mjolnir.CRM.Core
                          }, columns);
         }
 
-        public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, ColumnSet columns = null)
+
+        public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions)
+        {
+            return RetrieveMultiple(conditions, DefaultFields);
+        }
+
+        public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, string[] columns)
+        {
+            return RetrieveMultiple(conditions, new ColumnSet(columns));
+        }
+
+        public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, ColumnSet columns)
         {
             if (columns == null || !columns.Columns.Any())
                 columns = new ColumnSet(DefaultFields);
@@ -123,10 +170,7 @@ namespace Mjolnir.CRM.Core
             return context.OrganizationService.RetrieveMultiple(query);
         }
 
-        public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, string[] columns = null)
-        {
-            return RetrieveMultiple(conditions, new ColumnSet(columns));
-        }
+
 
 
         public void HandleException(Exception ex)
