@@ -31,7 +31,7 @@ namespace Mjolnir.CRM.Core
         public static void UpdateTraceSettingFromCRM(CrmContext crmContext)
         {
             //Get trace configurations
-            var crmSettingEntityManager = new CrmSettingEntityManager(crmContext);
+            var crmSettingEntityManager = new CrmSettingManager(crmContext);
             var configuration = crmSettingEntityManager.GetCrmSettingByKey(Constants.CrmSettingKeys.CrmTraceLevel);
 
             if (configuration != null && configuration.TraceLevelSettingOptionSet != null)

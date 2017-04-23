@@ -40,12 +40,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             {
                 context.TracingService.TraceVerbose("GetPublisherByUniqueName started.");
 
-                var result = RetrieveMultipleByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, publisherUniqueName);
-
-                if (result != null && result.Entities.Any())
-                    return result.Entities.First().ToGenericEntity<PublisherEntity>();
-
-                return null;
+                return RetrieveFirstByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, publisherUniqueName);
             }
             catch (Exception ex)
             {

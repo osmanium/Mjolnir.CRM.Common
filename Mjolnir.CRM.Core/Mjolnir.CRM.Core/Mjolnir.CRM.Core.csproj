@@ -91,9 +91,12 @@
     <Compile Include="CrmBusinessException.cs" />
     <Compile Include="CrmConnection.cs" />
     <Compile Include="EntityManagerBase.cs" />
-    <Compile Include="EntityManagers\ContactEntityManager.cs" />
-    <Compile Include="EntityManagers\CrmSettingEntityManager.cs" />
+    <Compile Include="EntityManagers\BusinessUnitManager.cs" />
+    <Compile Include="EntityManagers\ContactManager.cs" />
+    <Compile Include="EntityManagers\CrmSettingManager.cs" />
     <Compile Include="EntityManagers\PublisherManager.cs" />
+    <Compile Include="EntityManagers\RoleManager.cs" />
+    <Compile Include="EntityManagers\RolePrivilegesManager.cs" />
     <Compile Include="EntityManagers\WebResourceManager.cs" />
     <Compile Include="Enums\ComponentType.cs" />
     <Compile Include="Enums\CrmSettingType.cs" />

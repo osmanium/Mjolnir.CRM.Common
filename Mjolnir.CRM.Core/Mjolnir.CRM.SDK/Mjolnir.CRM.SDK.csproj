@@ -66,9 +66,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\BusinessUnitEntity.cs" />
     <Compile Include="Entities\ContactEntity.cs" />
     <Compile Include="Entities\CrmSettingEntity.cs" />
+    <Compile Include="Entities\PrivilegeEntity.cs" />
     <Compile Include="Entities\PublisherEntity.cs" />
+    <Compile Include="Entities\RolePrivilegesEntity.cs" />
+    <Compile Include="Entities\RoleEntity.cs" />
     <Compile Include="Entities\SolutionComponentEntity.cs" />
     <Compile Include="Entities\SolutionEntity.cs" />
     <Compile Include="Entities\WebResourceEntity.cs" />

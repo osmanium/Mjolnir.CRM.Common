@@ -28,7 +28,7 @@ namespace Mjolnir.CRM.Core
             this.PluginContext = new CrmContext(organizationService, pluginExecutionContext.UserId, tracingService, pluginExecutionContext, serviceProvider);
 
             //Get trace configurations
-            var crmSettingEntityManager = new CrmSettingEntityManager(PluginContext);
+            var crmSettingEntityManager = new CrmSettingManager(PluginContext);
             var configuration = crmSettingEntityManager.GetCrmSettingByKey(Constants.CrmSettingKeys.CrmTraceLevel);
 
             if (configuration != null && configuration.TraceLevelSettingOptionSet != null)

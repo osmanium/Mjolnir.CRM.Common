@@ -91,6 +91,7 @@ namespace Mjolnir.CRM.Core
         }
 
 
+
         public TEntity RetrieveById(Guid id)
         {
             return RetrieveById(id, DefaultFields);
@@ -120,6 +121,56 @@ namespace Mjolnir.CRM.Core
             }
         }
 
+        
+
+        public TEntity RetrieveFirst(List<ConditionExpression> conditions)
+        {
+            return RetrieveFirst(conditions, DefaultFields);
+        }
+
+        public TEntity RetrieveFirst(List<ConditionExpression> conditions, string[] columns)
+        {
+            return RetrieveFirst(conditions, new ColumnSet(columns));
+        }
+
+        public TEntity RetrieveFirst(List<ConditionExpression> conditions, ColumnSet columns)
+        {
+            if (columns == null || !columns.Columns.Any())
+                columns = new ColumnSet(DefaultFields);
+
+            var result = RetrieveMultiple(conditions, columns);
+
+            if (result != null && result.Entities.Any())
+                return result.Entities.First().ToGenericEntity<TEntity>();
+            return null;
+        }
+
+
+
+        public TEntity RetrieveFirstByAttributeExactValue(string attributeName, object value)
+        {
+            return RetrieveFirstByAttributeExactValue(attributeName, value, DefaultFields);
+        }
+
+        public TEntity RetrieveFirstByAttributeExactValue(string attributeName, object value, string[] columns)
+        {
+            return RetrieveFirstByAttributeExactValue(attributeName, value, new ColumnSet(columns));
+        }
+
+        public TEntity RetrieveFirstByAttributeExactValue(string attributeName, object value, ColumnSet columns)
+        {
+            //TODO : Verbose trace
+            if (columns == null || !columns.Columns.Any())
+                columns = new ColumnSet(DefaultFields);
+
+            var result = RetrieveMultipleByAttributeExactValue(attributeName, value, columns);
+
+            if (result != null && result.Entities.Any())
+                return result.Entities.First().ToGenericEntity<TEntity>();
+            return null;
+        }
+
+
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value)
         {
@@ -143,6 +194,12 @@ namespace Mjolnir.CRM.Core
                          }, columns);
         }
 
+
+
+        public EntityCollection RetrieveMultiple(string fetchXml)
+        {
+            return context.OrganizationService.RetrieveMultiple(new FetchExpression(fetchXml));
+        }
 
         public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions)
         {
@@ -170,8 +227,7 @@ namespace Mjolnir.CRM.Core
             return context.OrganizationService.RetrieveMultiple(query);
         }
 
-
-
+        
 
         public void HandleException(Exception ex)
         {

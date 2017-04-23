@@ -8,7 +8,7 @@ using Mjolnir.CRM.Sdk.Extensions;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
-    public class CrmSettingEntityManager : EntityManagerBase<CrmSettingEntity>
+    public class CrmSettingManager : EntityManagerBase<CrmSettingEntity>
     {
         internal override string[] DefaultFields
         {
@@ -29,19 +29,14 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public CrmSettingEntityManager(CrmContext context)
+        public CrmSettingManager(CrmContext context)
             : base(context, EntityAttributes.CrmSettingEntityAttributes.EntityName)
         {
         }
 
         public CrmSettingEntity GetCrmSettingByKey(string key)
         {
-            var settings = RetrieveMultipleByAttributeExactValue(EntityAttributes.CrmSettingEntityAttributes.SettingKey, key);
-
-            if (settings != null && settings.Entities.Any())
-                return settings.Entities.First().ToGenericEntity<CrmSettingEntity>();
-
-            return null;
+            return RetrieveFirstByAttributeExactValue(EntityAttributes.CrmSettingEntityAttributes.SettingKey, key);
         }
     }
 }

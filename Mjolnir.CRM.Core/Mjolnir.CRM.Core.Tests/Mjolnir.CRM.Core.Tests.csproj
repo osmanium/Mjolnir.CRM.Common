@@ -88,9 +88,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BusinessUnitManagerTests.cs" />
     <Compile Include="CrmSettingManagerTests.cs" />
     <Compile Include="CrmUnitTestBase.cs" />
     <Compile Include="PublisherManagerTests.cs" />
+    <Compile Include="RoleManagerTests.cs" />
+    <Compile Include="RolePrivilegesManagerTests.cs" />
     <Compile Include="SolutionManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebResourceManagerTests.cs" />

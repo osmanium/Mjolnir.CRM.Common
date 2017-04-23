@@ -132,13 +132,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
         public WebResourceEntity GetWebResourceBySchemaName(string webResourceSchemaName)
         {
-            var results = RetrieveMultipleByAttributeExactValue(EntityAttributes.WebResourceEntityAttributes.Name, webResourceSchemaName);
-
-            if (results != null && results.Entities.Any())
-                return results.Entities.First().ToGenericEntity<WebResourceEntity>();
-
-            return null;
+            return RetrieveFirstByAttributeExactValue(EntityAttributes.WebResourceEntityAttributes.Name, webResourceSchemaName);
         }
-
     }
 }

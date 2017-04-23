@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Core.EntityManagers
 {
-    public class ContactEntityManager : EntityManagerBase<CrmSettingEntity>
+    public class ContactManager : EntityManagerBase<CrmSettingEntity>
     {
-        public ContactEntityManager(CrmContext context) 
+        public ContactManager(CrmContext context) 
             : base(context, EntityAttributes.ContactEntityAttributes.EntityName)
         {
         }
