@@ -17,6 +17,11 @@ namespace Mjolnir.CRM.Sdk.Entities
             public const string SolutionId = "solutionid";
             public const string PrivilegeDepthMask = "privilegedepthmask";
             public const string IsManaged = "ismanaged";
+
+
+            //Relation Model
+            public const string Role_Alias = "roles";
+            public const string Privilege_Alias = "privileges";
         }
     }
 
@@ -99,5 +104,31 @@ namespace Mjolnir.CRM.Sdk.Entities
                 Attributes[EntityAttributes.RolePrivilegesEntityAttributes.IsManaged] = value;
             }
         }
+
+
+        #region RELATIONS
+        public RoleEntity _roleLinkedEntity;
+        public RoleEntity RoleLinkedEntity
+        {
+            get
+            {
+                if (_roleLinkedEntity == null)
+                    _roleLinkedEntity = new RoleEntity(this.Attributes, EntityAttributes.RolePrivilegesEntityAttributes.Role_Alias);
+                return _roleLinkedEntity;
+            }
+        }
+
+
+        public PrivilegeEntity _privilegeLinkedEntity;
+        public PrivilegeEntity PrivilegeLinkedEntity
+        {
+            get
+            {
+                if (_privilegeLinkedEntity == null)
+                    _privilegeLinkedEntity = new PrivilegeEntity(this.Attributes, EntityAttributes.RolePrivilegesEntityAttributes.Privilege_Alias);
+                return _privilegeLinkedEntity;
+            }
+        } 
+        #endregion
     }
 }

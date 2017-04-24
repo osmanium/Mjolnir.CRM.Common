@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xrm.Sdk;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,12 @@ namespace Mjolnir.CRM.Sdk.Entities
     {
         public PrivilegeEntity()
                 : base(EntityAttributes.PrivilegeEntityAttributes.EntityName)
+        {
+
+        }
+
+        public PrivilegeEntity(AttributeCollection attributes, string alias)
+                : base(EntityAttributes.PrivilegeEntityAttributes.EntityName, attributes, alias)
         {
 
         }

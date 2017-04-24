@@ -47,7 +47,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
                                      <attribute name='accessright'/>
                                      <attribute name='canbebasic'/>
                                      <attribute name='canbedeep'/>
+                                     <attribute name='canbeentityreference'/>
                                      <attribute name='canbeglobal'/>
+                                     <attribute name='canbeparententityreference'/>
                                      <attribute name='canbelocal'/>
                                   </link-entity>
                                </entity>

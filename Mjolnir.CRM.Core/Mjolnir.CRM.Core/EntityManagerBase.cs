@@ -201,6 +201,23 @@ namespace Mjolnir.CRM.Core
             return context.OrganizationService.RetrieveMultiple(new FetchExpression(fetchXml));
         }
 
+        
+        public EntityCollection RetrieveMultiple()
+        {
+            return RetrieveMultiple(DefaultFields);
+        }
+
+        public EntityCollection RetrieveMultiple(string[] columns)
+        {
+            return RetrieveMultiple( new ColumnSet(columns));
+        }
+
+        public EntityCollection RetrieveMultiple(ColumnSet columns)
+        {
+            return RetrieveMultiple(new List<ConditionExpression>(), columns);
+        }
+        
+        
         public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions)
         {
             return RetrieveMultiple(conditions, DefaultFields);
