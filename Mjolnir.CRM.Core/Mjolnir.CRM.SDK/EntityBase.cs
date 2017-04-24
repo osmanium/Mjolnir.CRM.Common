@@ -196,6 +196,6 @@ namespace Mjolnir.CRM.Sdk
         }
 
         #endregion
-
+        
     }
 }

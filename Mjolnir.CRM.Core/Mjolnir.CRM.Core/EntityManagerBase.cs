@@ -243,7 +243,6 @@ namespace Mjolnir.CRM.Core
 
             return context.OrganizationService.RetrieveMultiple(query);
         }
-
         
 
         public void HandleException(Exception ex)

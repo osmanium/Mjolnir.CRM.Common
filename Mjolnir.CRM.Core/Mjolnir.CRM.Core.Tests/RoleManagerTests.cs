@@ -28,12 +28,32 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var roleEntityManager = new RoleManager(CrmContext);
 
-            var roles = roleEntityManager.RetrieveMultiple();
+            var roles = roleEntityManager.GetAllRootLevelRoles();
 
             Assert.IsNotNull(roles);
-            Assert.IsTrue(roles.Entities.Any());
+            Assert.IsTrue(roles.Any());
 
-           var rolesList = roles.ToList<RoleEntity>();
+        }
+
+
+        [TestMethod]
+        public void should_compare_entity_records_same()
+        {
+            var roleEntityManager = new RoleManager(CrmContext);
+            var adminRole = roleEntityManager.GetRoleByName("System Administrator");
+            var adminRole2 = roleEntityManager.GetRoleByName("System Administrator");
+
+            Assert.IsTrue(adminRole.Compare(adminRole2));
+        }
+
+        [TestMethod]
+        public void should_compare_entity_records_different()
+        {
+            var roleEntityManager = new RoleManager(CrmContext);
+            var adminRole = roleEntityManager.GetRoleByName("System Administrator");
+            var adminRole2 = roleEntityManager.GetRoleByName("System Customizer");
+
+            Assert.IsFalse(adminRole.Compare(adminRole2));
         }
     }
 }

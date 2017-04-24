@@ -107,7 +107,7 @@ namespace Mjolnir.CRM.Sdk.Entities
 
 
         #region RELATIONS
-        public RoleEntity _roleLinkedEntity;
+        private RoleEntity _roleLinkedEntity;
         public RoleEntity RoleLinkedEntity
         {
             get
@@ -119,7 +119,7 @@ namespace Mjolnir.CRM.Sdk.Entities
         }
 
 
-        public PrivilegeEntity _privilegeLinkedEntity;
+        private PrivilegeEntity _privilegeLinkedEntity;
         public PrivilegeEntity PrivilegeLinkedEntity
         {
             get
