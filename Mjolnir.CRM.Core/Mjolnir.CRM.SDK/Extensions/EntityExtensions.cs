@@ -67,6 +67,9 @@ namespace Mjolnir.CRM.Sdk.Extensions
 
             foreach (var sourceKey in sourceEntity.Attributes.Keys)
             {
+                if (comparisionConfig.IgnoredAttributeKeys.Contains(sourceKey))
+                    continue;
+
                 if (targetEntity.Contains(sourceKey))
                 {
                     if (!CompareValue(sourceEntity[sourceKey], targetEntity[sourceKey]))
@@ -82,6 +85,17 @@ namespace Mjolnir.CRM.Sdk.Extensions
                     if (!comparisionConfig.IsFullComparision)
                         return new EntityComparisionResult(isEqual, reasons);
                 }
+            }
+
+            //Check only keys which are in target but not in source
+            foreach (var targetKey in targetEntity.Attributes.Where(w => !sourceEntity.Attributes.Keys.Contains(w.Key)))
+            {
+                if (comparisionConfig.IgnoredAttributeKeys.Contains(targetKey.Key))
+                    continue;
+
+                reasons.Add($"Source does not contain key {targetKey}");
+                if (!comparisionConfig.IsFullComparision)
+                    return new EntityComparisionResult(isEqual, reasons);
             }
 
             isEqual = true;

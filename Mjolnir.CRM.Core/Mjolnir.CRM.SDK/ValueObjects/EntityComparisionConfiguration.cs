@@ -11,11 +11,15 @@ namespace Mjolnir.CRM.Sdk.ValueObjects
         private static EntityComparisionConfiguration _default;
         public static EntityComparisionConfiguration Default { get { return _default; } }
 
-        public bool IsIdIgnore { get; private set; }
+        public bool IsIdIgnore { get; set; }
 
-        public bool IsLogicalNameIgnore { get; private set; }
+        public bool IsLogicalNameIgnore { get; set; }
 
-        public bool IsFullComparision { get; private set; }
+        public bool IsFullComparision { get; set; }
+
+        public List<string> IgnoredAttributeKeys { get; set; }
+
+        public bool IsTargetToSourceAttributeCheck { get; set; }
 
         static EntityComparisionConfiguration()
         {
@@ -23,13 +27,15 @@ namespace Mjolnir.CRM.Sdk.ValueObjects
             {
                 IsFullComparision = false,
                 IsIdIgnore = false,
-                IsLogicalNameIgnore = false
+                IsLogicalNameIgnore = false,
+                IsTargetToSourceAttributeCheck = false,
+                IgnoredAttributeKeys = new List<string>()
             };
         }
 
         public EntityComparisionConfiguration()
         {
-           
+            IgnoredAttributeKeys = new List<string>();
         }
     }
 }
