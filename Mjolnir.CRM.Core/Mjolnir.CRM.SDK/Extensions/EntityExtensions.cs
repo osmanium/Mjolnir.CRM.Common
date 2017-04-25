@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Mjolnir.CRM.Sdk.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,13 +43,27 @@ namespace Mjolnir.CRM.Sdk.Extensions
             return t;
         }
 
-        public static bool Compare(this Entity sourceEntity, Entity targetEntity)
+        public static EntityComparisionResult Compare(this Entity sourceEntity, Entity targetEntity, EntityComparisionConfiguration comparisionConfig = null)
         {
+            var isEqual = false;
+            var reasons = new List<string>();
+
+            if (comparisionConfig == null)
+                comparisionConfig = EntityComparisionConfiguration.Default;
+
             if (sourceEntity.Id != targetEntity.Id)
-                return false;
+            {
+                reasons.Add($"Id's are different");
+                if (!comparisionConfig.IsFullComparision)
+                    return new EntityComparisionResult(isEqual, reasons);
+            }
 
             if (sourceEntity.LogicalName != targetEntity.LogicalName)
-                return false;
+            {
+                reasons.Add($"LogicalName'a are different");
+                if (!comparisionConfig.IsFullComparision)
+                    return new EntityComparisionResult(isEqual, reasons);
+            }
 
             foreach (var sourceKey in sourceEntity.Attributes.Keys)
             {
@@ -56,13 +71,22 @@ namespace Mjolnir.CRM.Sdk.Extensions
                 {
                     if (!CompareValue(sourceEntity[sourceKey], targetEntity[sourceKey]))
                     {
-                        return false;
+                        reasons.Add($"{sourceKey} Attributes are different, source : {sourceEntity[sourceKey]}, target {targetEntity[sourceKey]}");
+                        if (!comparisionConfig.IsFullComparision)
+                            return new EntityComparisionResult(isEqual, reasons);
                     }
                 }
-                else return false;
+                else
+                {
+                    reasons.Add($"Target does not contain key {sourceKey}");
+                    if (!comparisionConfig.IsFullComparision)
+                        return new EntityComparisionResult(isEqual, reasons);
+                }
             }
 
-            return true;
+            isEqual = true;
+
+            return new EntityComparisionResult(isEqual, reasons);
         }
 
         private static bool CompareValue(object sourceValue, object targetValue)
@@ -91,7 +115,15 @@ namespace Mjolnir.CRM.Sdk.Extensions
                 if (tmpSource.LogicalName != tmpTarget.LogicalName)
                     return false;
             }
-            
+
+            else if (sourceValue is AliasedValue)
+            {
+                var tmpSource = sourceValue as AliasedValue;
+                var tmpTarget = targetValue as AliasedValue;
+
+                return CompareValue(tmpSource.Value, tmpTarget.Value);
+            }
+
             else if (sourceValue is int)
             {
                 if (!int.Equals((int)sourceValue, (int)targetValue))
@@ -101,12 +133,6 @@ namespace Mjolnir.CRM.Sdk.Extensions
             else if (sourceValue is Guid)
             {
                 if (!Guid.Equals((Guid)sourceValue, (Guid)targetValue))
-                    return false;
-            }
-
-            else if (sourceValue is double)
-            {
-                if (!double.Equals((double)sourceValue, (double)targetValue))
                     return false;
             }
 
@@ -137,12 +163,6 @@ namespace Mjolnir.CRM.Sdk.Extensions
                     return false;
             }
 
-            else if (sourceValue is long)
-            {
-                if (!long.Equals((long)sourceValue, (long)targetValue))
-                    return false;
-            }
-
             else if (sourceValue is Money)
             {
                 var tmpSource = sourceValue as Money;
@@ -152,6 +172,19 @@ namespace Mjolnir.CRM.Sdk.Extensions
                     return false;
             }
 
+            else if (sourceValue is long)
+            {
+                if (!long.Equals((long)sourceValue, (long)targetValue))
+                    return false;
+            }
+
+            else if (sourceValue is double)
+            {
+                if (!double.Equals((double)sourceValue, (double)targetValue))
+                    return false;
+            }
+
+            //TODO : Check for customer lookup is regular lookup
 
             return true;
         }

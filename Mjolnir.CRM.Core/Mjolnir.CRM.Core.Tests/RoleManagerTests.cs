@@ -43,7 +43,7 @@ namespace Mjolnir.CRM.Core.Tests
             var adminRole = roleEntityManager.GetRoleByName("System Administrator");
             var adminRole2 = roleEntityManager.GetRoleByName("System Administrator");
 
-            Assert.IsTrue(adminRole.Compare(adminRole2));
+            Assert.IsTrue(adminRole.Compare(adminRole2).IsEqual);
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace Mjolnir.CRM.Core.Tests
             var adminRole = roleEntityManager.GetRoleByName("System Administrator");
             var adminRole2 = roleEntityManager.GetRoleByName("System Customizer");
 
-            Assert.IsFalse(adminRole.Compare(adminRole2));
+            Assert.IsFalse(adminRole.Compare(adminRole2).IsEqual);
         }
     }
 }
