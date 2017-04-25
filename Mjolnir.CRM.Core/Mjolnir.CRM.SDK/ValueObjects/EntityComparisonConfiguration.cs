@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 
 namespace Mjolnir.CRM.Sdk.ValueObjects
 {
-    public class EntityComparisionConfiguration
+    public class EntityComparisonConfiguration
     {
-        private static EntityComparisionConfiguration _default;
-        public static EntityComparisionConfiguration Default { get { return _default; } }
+        private static EntityComparisonConfiguration _default;
+        public static EntityComparisonConfiguration Default { get { return _default; } }
 
         public bool IsIdIgnore { get; set; }
 
         public bool IsLogicalNameIgnore { get; set; }
 
-        public bool IsFullComparision { get; set; }
+        public bool IsFullComparison { get; set; }
 
         public List<string> IgnoredAttributeKeys { get; set; }
 
         public bool IsTargetToSourceAttributeCheck { get; set; }
 
-        static EntityComparisionConfiguration()
+        static EntityComparisonConfiguration()
         {
-            _default = new EntityComparisionConfiguration()
+            _default = new EntityComparisonConfiguration()
             {
-                IsFullComparision = false,
+                IsFullComparison = false,
                 IsIdIgnore = false,
                 IsLogicalNameIgnore = false,
                 IsTargetToSourceAttributeCheck = false,
@@ -33,7 +33,7 @@ namespace Mjolnir.CRM.Sdk.ValueObjects
             };
         }
 
-        public EntityComparisionConfiguration()
+        public EntityComparisonConfiguration()
         {
             IgnoredAttributeKeys = new List<string>();
         }

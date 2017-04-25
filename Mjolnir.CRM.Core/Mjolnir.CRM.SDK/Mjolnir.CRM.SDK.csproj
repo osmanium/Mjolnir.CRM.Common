@@ -81,8 +81,8 @@
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Optionsets\WebResourceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ValueObjects\EntityComparisionConfiguration.cs" />
-    <Compile Include="ValueObjects\EntityComparisionResult.cs" />
+    <Compile Include="ValueObjects\EntityComparisonConfiguration.cs" />
+    <Compile Include="ValueObjects\EntityComparisonResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mjolnir.CRM.Sdk.snk" />

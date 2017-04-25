@@ -43,26 +43,26 @@ namespace Mjolnir.CRM.Sdk.Extensions
             return t;
         }
 
-        public static EntityComparisionResult Compare(this Entity sourceEntity, Entity targetEntity, EntityComparisionConfiguration comparisionConfig = null)
+        public static EntityComparisonResult Compare(this Entity sourceEntity, Entity targetEntity, EntityComparisonConfiguration comparisionConfig = null)
         {
             var isEqual = false;
             var reasons = new List<string>();
 
             if (comparisionConfig == null)
-                comparisionConfig = EntityComparisionConfiguration.Default;
+                comparisionConfig = EntityComparisonConfiguration.Default;
 
             if (sourceEntity.Id != targetEntity.Id)
             {
                 reasons.Add($"Id's are different");
-                if (!comparisionConfig.IsFullComparision)
-                    return new EntityComparisionResult(isEqual, reasons);
+                if (!comparisionConfig.IsFullComparison)
+                    return new EntityComparisonResult(isEqual, reasons);
             }
 
             if (sourceEntity.LogicalName != targetEntity.LogicalName)
             {
                 reasons.Add($"LogicalName'a are different");
-                if (!comparisionConfig.IsFullComparision)
-                    return new EntityComparisionResult(isEqual, reasons);
+                if (!comparisionConfig.IsFullComparison)
+                    return new EntityComparisonResult(isEqual, reasons);
             }
 
             foreach (var sourceKey in sourceEntity.Attributes.Keys)
@@ -75,15 +75,15 @@ namespace Mjolnir.CRM.Sdk.Extensions
                     if (!CompareValue(sourceEntity[sourceKey], targetEntity[sourceKey]))
                     {
                         reasons.Add($"{sourceKey} Attributes are different, source : {sourceEntity[sourceKey]}, target {targetEntity[sourceKey]}");
-                        if (!comparisionConfig.IsFullComparision)
-                            return new EntityComparisionResult(isEqual, reasons);
+                        if (!comparisionConfig.IsFullComparison)
+                            return new EntityComparisonResult(isEqual, reasons);
                     }
                 }
                 else
                 {
                     reasons.Add($"Target does not contain key {sourceKey}");
-                    if (!comparisionConfig.IsFullComparision)
-                        return new EntityComparisionResult(isEqual, reasons);
+                    if (!comparisionConfig.IsFullComparison)
+                        return new EntityComparisonResult(isEqual, reasons);
                 }
             }
 
@@ -94,13 +94,15 @@ namespace Mjolnir.CRM.Sdk.Extensions
                     continue;
 
                 reasons.Add($"Source does not contain key {targetKey}");
-                if (!comparisionConfig.IsFullComparision)
-                    return new EntityComparisionResult(isEqual, reasons);
+                if (!comparisionConfig.IsFullComparison)
+                    return new EntityComparisonResult(isEqual, reasons);
             }
 
-            isEqual = true;
+            //If there is no error, it should be same
+            if (!reasons.Any())
+                isEqual = true;
 
-            return new EntityComparisionResult(isEqual, reasons);
+            return new EntityComparisonResult(isEqual, reasons);
         }
 
         private static bool CompareValue(object sourceValue, object targetValue)
