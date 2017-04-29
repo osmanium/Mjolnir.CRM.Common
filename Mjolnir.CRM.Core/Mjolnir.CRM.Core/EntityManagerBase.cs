@@ -25,6 +25,56 @@ namespace Mjolnir.CRM.Core
             this.context = context;
             this.entityLogicalName = entityLogicalName;
         }
+        
+
+        //public async Task<EntityCollection> RetrieveMultipleAsync(QueryBase query)
+        //{
+        //    var t = Task.Factory.StartNew(() =>
+        //    {
+        //        var response = context.OrganizationService.RetrieveMultiple(query);
+        //        return response;
+        //    });
+
+        //    return await t;
+        //}
+
+
+
+        //public async Task AssociateAsync(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities)
+        //{
+        //    var t = Task.Factory.StartNew(() =>
+        //    {
+        //        context.OrganizationService.Associate(entityName, entityId, relationship, relatedEntities);
+        //    });
+
+        //    await t;
+        //}
+        //public async Task DisassociateAsync(string entityName, Guid entityId, Relationship relationship, EntityReferenceCollection relatedEntities)
+        //{
+        //    var t = Task.Factory.StartNew(() =>
+        //    {
+        //        context.OrganizationService.Disassociate(entityName, entityId, relationship, relatedEntities);
+        //    });
+
+        //    await t;
+        //}
+
+
+        public T Execute<T>(OrganizationRequest request)
+            where T : OrganizationResponse
+        {
+            return context.OrganizationService.Execute(request) as T;
+        }
+        public async Task<T> ExecuteAsync<T>(OrganizationRequest request)
+            where T : OrganizationResponse
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return Execute<T>(request);
+            });
+
+            return await t;
+        }
 
 
         public Guid Create(TEntity entity)
@@ -47,11 +97,31 @@ namespace Mjolnir.CRM.Core
                 return Guid.Empty;
             }
         }
+        public async Task<Guid> CreateAsync(TEntity entity)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return Create(entity);
+            });
+
+            return await t;
+        }
+
 
         public void DeleteById(Guid id)
         {
             context.OrganizationService.Delete(entityLogicalName, id);
         }
+        public async Task DeleteAsync(Guid id)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                DeleteById(id);
+            });
+
+            await t;
+        }
+
 
         /// <summary>
         /// This method should be used only for small amount of data, pager is not implemented, works only for initial page of data.
@@ -83,23 +153,58 @@ namespace Mjolnir.CRM.Core
 
             return failedRecords;
         }
+        public async Task<EntityCollection> DeleteMultipleByConditionsAsync(List<ConditionExpression> conditions)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return DeleteMultipleByConditions(conditions);
+            });
+
+            return await t;
+        }
 
 
         public void Update(TEntity entity)
         {
             context.OrganizationService.Update(entity);
         }
+        public async Task UpdateAsync(TEntity entity)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                Update(entity);
+            });
 
+            await t;
+        }
 
 
         public TEntity RetrieveById(Guid id)
         {
             return RetrieveById(id, DefaultFields);
         }
+        public async Task<TEntity> RetrieveByIdAsync(Guid id)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveById(id);
+            });
+
+            return await t;
+        }
 
         public TEntity RetrieveById(Guid id, string[] columns)
         {
             return RetrieveById(id, new ColumnSet(columns));
+        }
+        public async Task<TEntity> RetrieveByIdAsync(Guid id, string[] columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveById(id, columns);
+            });
+
+            return await t;
         }
 
         public TEntity RetrieveById(Guid id, ColumnSet columns)
@@ -120,17 +225,43 @@ namespace Mjolnir.CRM.Core
                 return null;
             }
         }
+        public async Task<TEntity> RetrieveByIdAsync(Guid id, ColumnSet columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveById(id, columns);
+            });
 
-        
+            return await t;
+        }
+
 
         public TEntity RetrieveFirst(List<ConditionExpression> conditions)
         {
             return RetrieveFirst(conditions, DefaultFields);
         }
+        public async Task<TEntity> RetrieveFirstAsync(List<ConditionExpression> conditions)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveFirst(conditions);
+            });
+
+            return await t;
+        }
 
         public TEntity RetrieveFirst(List<ConditionExpression> conditions, string[] columns)
         {
             return RetrieveFirst(conditions, new ColumnSet(columns));
+        }
+        public async Task<TEntity> RetrieveFirstAsync(List<ConditionExpression> conditions, string[] columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveFirst(conditions, columns);
+            });
+
+            return await t;
         }
 
         public TEntity RetrieveFirst(List<ConditionExpression> conditions, ColumnSet columns)
@@ -144,17 +275,43 @@ namespace Mjolnir.CRM.Core
                 return result.Entities.First().ToGenericEntity<TEntity>();
             return null;
         }
+        public async Task<TEntity> RetrieveFirstAsync(List<ConditionExpression> conditions, ColumnSet columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveFirst(conditions, columns);
+            });
 
+            return await t;
+        }
 
 
         public TEntity RetrieveFirstByAttributeExactValue(string attributeName, object value)
         {
             return RetrieveFirstByAttributeExactValue(attributeName, value, DefaultFields);
         }
+        public async Task<TEntity> RetrieveFirstByAttributeExactValueAsync(string attributeName, object value)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveFirstByAttributeExactValue(attributeName, value);
+            });
+
+            return await t;
+        }
 
         public TEntity RetrieveFirstByAttributeExactValue(string attributeName, object value, string[] columns)
         {
             return RetrieveFirstByAttributeExactValue(attributeName, value, new ColumnSet(columns));
+        }
+        public async Task<TEntity> RetrieveFirstByAttributeExactValueAsync(string attributeName, object value, string[] columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveFirstByAttributeExactValue(attributeName, value, columns);
+            });
+
+            return await t;
         }
 
         public TEntity RetrieveFirstByAttributeExactValue(string attributeName, object value, ColumnSet columns)
@@ -169,17 +326,43 @@ namespace Mjolnir.CRM.Core
                 return result.Entities.First().ToGenericEntity<TEntity>();
             return null;
         }
+        public async Task<TEntity> RetrieveFirstByAttributeExactValueAsync(string attributeName, object value, ColumnSet columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveFirstByAttributeExactValue(attributeName, value, columns);
+            });
 
+            return await t;
+        }
 
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value)
         {
             return RetrieveMultipleByAttributeExactValue(attributeName, value, DefaultFields);
         }
+        public async Task<EntityCollection> RetrieveMultipleByAttributeExactValueAsync(string attributeName, object value)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultipleByAttributeExactValue(attributeName, value);
+            });
+
+            return await t;
+        }
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, string[] columns)
         {
             return RetrieveMultipleByAttributeExactValue(attributeName, value, new ColumnSet(columns));
+        }
+        public async Task<EntityCollection> RetrieveMultipleByAttributeExactValueAsync(string attributeName, object value, string[] columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultipleByAttributeExactValue(attributeName, value, columns);
+            });
+
+            return await t;
         }
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value, ColumnSet columns)
@@ -193,39 +376,101 @@ namespace Mjolnir.CRM.Core
                             new ConditionExpression(attributeName, ConditionOperator.Equal, value)
                          }, columns);
         }
+        public async Task<EntityCollection> RetrieveMultipleByAttributeExactValueAsync(string attributeName, object value, ColumnSet columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultipleByAttributeExactValue(attributeName, value, columns);
+            });
 
+            return await t;
+        }
 
 
         public EntityCollection RetrieveMultiple(string fetchXml)
         {
             return context.OrganizationService.RetrieveMultiple(new FetchExpression(fetchXml));
         }
+        public async Task<EntityCollection> RetrieveMultipleByAttributeExactValueAsync(string fetchXml)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultiple(fetchXml);
+            });
 
-        
+            return await t;
+        }
+
+
         public EntityCollection RetrieveMultiple()
         {
             return RetrieveMultiple(DefaultFields);
         }
+        public async Task<EntityCollection> RetrieveMultipleAsync()
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultiple();
+            });
+
+            return await t;
+        }
 
         public EntityCollection RetrieveMultiple(string[] columns)
         {
-            return RetrieveMultiple( new ColumnSet(columns));
+            return RetrieveMultiple(new ColumnSet(columns));
+        }
+        public async Task<EntityCollection> RetrieveMultipleAsync(string[] columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultiple(columns);
+            });
+
+            return await t;
         }
 
         public EntityCollection RetrieveMultiple(ColumnSet columns)
         {
             return RetrieveMultiple(new List<ConditionExpression>(), columns);
         }
-        
-        
+        public async Task<EntityCollection> RetrieveMultipleAsync(ColumnSet columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultiple(columns);
+            });
+
+            return await t;
+        }
+
+
         public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions)
         {
             return RetrieveMultiple(conditions, DefaultFields);
+        }
+        public async Task<EntityCollection> RetrieveMultipleAsync(List<ConditionExpression> conditions)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultiple(conditions);
+            });
+
+            return await t;
         }
 
         public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, string[] columns)
         {
             return RetrieveMultiple(conditions, new ColumnSet(columns));
+        }
+        public async Task<EntityCollection> RetrieveMultipleAsync(List<ConditionExpression> conditions, string[] columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultiple(conditions, columns);
+            });
+
+            return await t;
         }
 
         public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, ColumnSet columns)
@@ -243,7 +488,16 @@ namespace Mjolnir.CRM.Core
 
             return context.OrganizationService.RetrieveMultiple(query);
         }
-        
+        public async Task<EntityCollection> RetrieveMultipleAsync(List<ConditionExpression> conditions, ColumnSet columns)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultiple(conditions, columns);
+            });
+
+            return await t;
+        }
+
 
         public void HandleException(Exception ex)
         {

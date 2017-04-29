@@ -106,7 +106,8 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 string[] retrieveColumns = new string[] {
                     EntityAttributes.WebResourceEntityAttributes.Name,
                     EntityAttributes.WebResourceEntityAttributes.DisplayName,
-                    EntityAttributes.WebResourceEntityAttributes.Content
+                    EntityAttributes.WebResourceEntityAttributes.Content,
+                    EntityAttributes.WebResourceEntityAttributes.WebResourceType,
                 };
 
                 QueryExpression query = new QueryExpression(EntityAttributes.WebResourceEntityAttributes.EntityName);
