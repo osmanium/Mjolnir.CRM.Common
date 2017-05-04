@@ -18,7 +18,10 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var webResourceManager = new WebResourceManager(CrmContext);
 
-            var result = webResourceManager.GetAllWebResourcesMetadata(Sdk.Optionsets.WebResourceType.JScript);
+            var task = webResourceManager.GetAllWebResourcesMetadataAsync(Sdk.Optionsets.WebResourceType.JScript);
+            task.Wait();
+
+            var result = task.Result;
 
             result.ShouldSatisfyAllConditions(
                 () => result.ShouldNotBeNull(),
@@ -39,7 +42,10 @@ namespace Mjolnir.CRM.Core.Tests
                 "c2a338b7-77b1-e011-963d-00155db99e10"
             };
 
-            var result = webResourceManager.GetWebResourcesContentsByIds(webResourceIds);
+            var task = webResourceManager.GetWebResourcesContentsByIdsAsync(webResourceIds);
+            task.Wait();
+
+            var result = task.Result;
 
             result.ShouldSatisfyAllConditions(
                 () => result.ShouldNotBeNull(),
@@ -52,13 +58,16 @@ namespace Mjolnir.CRM.Core.Tests
         public void should_retrieve_webresource_by_name()
         {
             var webResourceManager = new WebResourceManager(CrmContext);
-            
-            var result = webResourceManager.GetWebResourceBySchemaName("cc_MscrmControls.Multimedia.MultimediaPlayerControl/libs/jquery_2.1.1.js");
+
+            var task = webResourceManager.GetWebResourceBySchemaNameAsync("cc_MscrmControls.Multimedia.MultimediaPlayerControl/libs/jquery_2.1.1.js");
+            task.Wait();
+
+            var result = task.Result;
 
             result.ShouldSatisfyAllConditions(
                 () => result.ShouldNotBeNull()
             );
         }
-        
+
     }
 }

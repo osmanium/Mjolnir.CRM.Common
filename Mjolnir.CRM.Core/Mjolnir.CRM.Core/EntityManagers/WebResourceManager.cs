@@ -34,9 +34,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
         { }
 
 
-        public List<WebResourceEntity> GetAllWebResourcesMetadata(WebResourceType type)
+        public async Task<List<WebResourceEntity>> GetAllWebResourcesMetadataAsync(WebResourceType type)
         {
-            context.TracingService.TraceVerbose("GetAllJavascriptWebResourcesMetadata started.");
+            context.TracingService.TraceVerbose("GetAllWebResourcesMetadataAsync started.");
 
             try
             {
@@ -53,11 +53,13 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 if (type != WebResourceType.All)
                     query.Criteria.AddCondition(new ConditionExpression(EntityAttributes.WebResourceEntityAttributes.WebResourceType, ConditionOperator.Equal, (int)type));
 
-                var result = context.OrganizationService.RetrieveMultiple(query);
+                //TODO : Make here async
+                var result = await RetrieveMultipleAsync(query);
 
                 if (result != null && result.Entities.Any())
                 {
-                    return result.Entities.Select(s => s.ToGenericEntity<WebResourceEntity>()).ToList();
+                    //TODO : Return ToListAsync version
+                    return result.Entities.Select(s => s.ToSpecificEntity<WebResourceEntity>()).ToList();
                 }
 
                 return null;
@@ -69,9 +71,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public string GetWebResourceContentById(Guid webResourceId)
+        public async Task<string> GetWebResourceContentByIdAsync(Guid webResourceId)
         {
-            context.TracingService.TraceVerbose("GetWebResourceContentById started.");
+            context.TracingService.TraceVerbose("GetWebResourceContentByIdAsync started.");
 
             try
             {
@@ -81,7 +83,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
                     EntityAttributes.WebResourceEntityAttributes.Content
                 };
 
-                var webResource = RetrieveById(webResourceId, retrieveColumns);
+                var webResource = await RetrieveByIdAsync(webResourceId, retrieveColumns);
 
                 if (webResource != null)
                 {
@@ -97,9 +99,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public List<WebResourceEntity> GetWebResourcesContentsByIds(string[] webResourceIds)
+        public async Task<List<WebResourceEntity>> GetWebResourcesContentsByIdsAsync(string[] webResourceIds)
         {
-            context.TracingService.TraceVerbose("GetAllJavascriptWebResourcesMetadata started.");
+            context.TracingService.TraceVerbose("GetWebResourcesContentsByIdsAsync started.");
 
             try
             {
@@ -115,11 +117,11 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
                 query.Criteria.AddCondition(EntityAttributes.WebResourceEntityAttributes.IdFieldName, ConditionOperator.In, webResourceIds);
 
-                var result = context.OrganizationService.RetrieveMultiple(query);
+                var result = await RetrieveMultipleAsync(query);
 
                 if (result != null && result.Entities.Any())
                 {
-                    return result.Entities.Select(s => s.ToGenericEntity<WebResourceEntity>()).ToList();
+                    return result.Entities.Select(s => s.ToSpecificEntity<WebResourceEntity>()).ToList();
                 }
 
                 return null;
@@ -131,9 +133,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public WebResourceEntity GetWebResourceBySchemaName(string webResourceSchemaName)
+        public async Task<WebResourceEntity> GetWebResourceBySchemaNameAsync(string webResourceSchemaName)
         {
-            return RetrieveFirstByAttributeExactValue(EntityAttributes.WebResourceEntityAttributes.Name, webResourceSchemaName);
+            return await RetrieveFirstByAttributeExactValueAsync(EntityAttributes.WebResourceEntityAttributes.Name, webResourceSchemaName);
         }
     }
 }

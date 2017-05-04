@@ -34,9 +34,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
         {
         }
 
-        public CrmSettingEntity GetCrmSettingByKey(string key)
+        public async Task<CrmSettingEntity> GetCrmSettingByKeyAsync(string key)
         {
-            return RetrieveFirstByAttributeExactValue(EntityAttributes.CrmSettingEntityAttributes.SettingKey, key);
+            return await RetrieveFirstByAttributeExactValueAsync(EntityAttributes.CrmSettingEntityAttributes.SettingKey, key);
         }
     }
 }

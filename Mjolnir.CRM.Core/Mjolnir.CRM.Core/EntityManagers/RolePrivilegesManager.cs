@@ -30,7 +30,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             : base(context, EntityAttributes.RolePrivilegesEntityAttributes.EntityName)
         { }
 
-        public List<RolePrivilegesEntity> GetRolePrivileges(Guid RoleId)
+        public async Task<List<RolePrivilegesEntity>> GetRolePrivilegesAsync(Guid RoleId)
         {
             var fetchXml = $@"<fetch version='1.0' mapping='logical' distinct='false'>
                                <entity name='roleprivileges'>
@@ -55,7 +55,9 @@ namespace Mjolnir.CRM.Core.EntityManagers
                                </entity>
                             </fetch>";
 
-            return RetrieveMultiple(fetchXml).ToList<RolePrivilegesEntity>();
+            var task = await RetrieveMultipleAsync(fetchXml);
+            
+            return task.ToList<RolePrivilegesEntity>();
         }
     }
 }

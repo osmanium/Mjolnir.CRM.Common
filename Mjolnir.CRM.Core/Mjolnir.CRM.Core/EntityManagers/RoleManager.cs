@@ -34,63 +34,65 @@ namespace Mjolnir.CRM.Core.EntityManagers
         { }
 
 
-        public RoleEntity GetRoleByName(string roleName)
+        public async Task<RoleEntity> GetRoleByNameAsync(string roleName)
         {
-            return GetRoleByName(roleName, DefaultFields);
+            return await GetRoleByNameAsync(roleName, DefaultFields);
         }
 
-        public RoleEntity GetRoleByName(string roleName, string[] columns = null)
+        public async Task<RoleEntity> GetRoleByNameAsync(string roleName, string[] columns = null)
         {
-            return GetRoleByName(roleName, new ColumnSet(columns));
+            return await GetRoleByNameAsync(roleName, new ColumnSet(columns));
         }
 
-        public RoleEntity GetRoleByName(string roleName, ColumnSet columns = null)
+        public async Task<RoleEntity> GetRoleByNameAsync(string roleName, ColumnSet columns = null)
         {
             var businessUnitEntityManager = new BusinessUnitManager(context);
-            var roobBusinessUnit = businessUnitEntityManager.GetRootBusinessUnit();
+            var rootBusinessUnit = await businessUnitEntityManager.GetRootBusinessUnitAsync();
 
-            return GetRoleByName(roleName, roobBusinessUnit.Id, columns);
+            return await GetRoleByNameAsync(roleName, rootBusinessUnit.Id, columns);
         }
 
 
-        public RoleEntity GetRoleByName(string roleName, Guid businessUnitId)
+        public async Task<RoleEntity> GetRoleByNameAsync(string roleName, Guid businessUnitId)
         {
-            return GetRoleByName(roleName, businessUnitId, DefaultFields);
+            return await GetRoleByNameAsync(roleName, businessUnitId, DefaultFields);
         }
 
-        public RoleEntity GetRoleByName(string roleName, Guid businessUnitId, string[] columns = null)
+        public async Task<RoleEntity> GetRoleByNameAsync(string roleName, Guid businessUnitId, string[] columns = null)
         {
-            return GetRoleByName(roleName, businessUnitId, new ColumnSet(columns));
+            return await GetRoleByNameAsync(roleName, businessUnitId, new ColumnSet(columns));
         }
 
-        public RoleEntity GetRoleByName(string roleName, Guid businessUnitId, ColumnSet columns = null)
+        public async Task<RoleEntity> GetRoleByNameAsync(string roleName, Guid businessUnitId, ColumnSet columns = null)
         {
-            return RetrieveFirst(new List<ConditionExpression> {
+            return await RetrieveFirstAsync(new List<ConditionExpression> {
                 new ConditionExpression(EntityAttributes.RoleEntityAttributes.Name,ConditionOperator.Equal, roleName),
                 new ConditionExpression(EntityAttributes.RoleEntityAttributes.BusinessUnitId,ConditionOperator.Equal, businessUnitId)
             }, columns);
         }
 
 
-        public List<RoleEntity> GetAllRootLevelRoles()
+        public async Task<List<RoleEntity>> GetAllRootLevelRolesAsync()
         {
-            return GetAllRootLevelRoles(DefaultFields);
+            return await GetAllRootLevelRolesAsync(DefaultFields);
         }
 
-        public List<RoleEntity> GetAllRootLevelRoles(string[] columns = null)
+        public async Task<List<RoleEntity>> GetAllRootLevelRolesAsync(string[] columns = null)
         {
-            return GetAllRootLevelRoles(new ColumnSet(columns));
+            return await GetAllRootLevelRolesAsync(new ColumnSet(columns));
         }
 
-        public List<RoleEntity> GetAllRootLevelRoles(ColumnSet columns = null)
+        public async Task<List<RoleEntity>> GetAllRootLevelRolesAsync(ColumnSet columns = null)
         {
             var businessUnitEntityManager = new BusinessUnitManager(context);
-            var roobBusinessUnit = businessUnitEntityManager.GetRootBusinessUnit();
+            var roobBusinessUnit = await businessUnitEntityManager.GetRootBusinessUnitAsync();
 
-            return RetrieveMultiple(new List<ConditionExpression> {
+            var task = await RetrieveMultipleAsync(new List<ConditionExpression> {
                 new ConditionExpression(EntityAttributes.RoleEntityAttributes.BusinessUnitId,ConditionOperator.Equal, roobBusinessUnit.Id)
-            }, columns).ToList<RoleEntity>();
+            }, columns);
+
+            return task.ToList<RoleEntity>();
         }
-        
+
     }
 }

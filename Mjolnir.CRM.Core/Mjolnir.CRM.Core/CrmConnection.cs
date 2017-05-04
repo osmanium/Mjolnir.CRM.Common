@@ -28,11 +28,11 @@ namespace Mjolnir.CRM.Core
             return crmContext;
         }
 
-        public static void UpdateTraceSettingFromCRM(CrmContext crmContext)
+        public static async void UpdateTraceSettingFromCRM(CrmContext crmContext)
         {
             //Get trace configurations
             var crmSettingEntityManager = new CrmSettingManager(crmContext);
-            var configuration = crmSettingEntityManager.GetCrmSettingByKey(Constants.CrmSettingKeys.CrmTraceLevel);
+            var configuration = await crmSettingEntityManager.GetCrmSettingByKeyAsync(Constants.CrmSettingKeys.CrmTraceLevel);
 
             if (configuration != null && configuration.TraceLevelSettingOptionSet != null)
             {

@@ -112,7 +112,7 @@ namespace Mjolnir.CRM.Core
         {
             context.OrganizationService.Delete(entityLogicalName, id);
         }
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteByIdAsync(Guid id)
         {
             var t = Task.Factory.StartNew(() =>
             {
@@ -216,7 +216,7 @@ namespace Mjolnir.CRM.Core
 
             try
             {
-                return context.OrganizationService.Retrieve(entityLogicalName, id, columns).ToGenericEntity<TEntity>();
+                return context.OrganizationService.Retrieve(entityLogicalName, id, columns).ToSpecificEntity<TEntity>();
 
             }
             catch (Exception ex)
@@ -272,7 +272,7 @@ namespace Mjolnir.CRM.Core
             var result = RetrieveMultiple(conditions, columns);
 
             if (result != null && result.Entities.Any())
-                return result.Entities.First().ToGenericEntity<TEntity>();
+                return result.Entities.First().ToSpecificEntity<TEntity>();
             return null;
         }
         public async Task<TEntity> RetrieveFirstAsync(List<ConditionExpression> conditions, ColumnSet columns)
@@ -323,7 +323,7 @@ namespace Mjolnir.CRM.Core
             var result = RetrieveMultipleByAttributeExactValue(attributeName, value, columns);
 
             if (result != null && result.Entities.Any())
-                return result.Entities.First().ToGenericEntity<TEntity>();
+                return result.Entities.First().ToSpecificEntity<TEntity>();
             return null;
         }
         public async Task<TEntity> RetrieveFirstByAttributeExactValueAsync(string attributeName, object value, ColumnSet columns)
@@ -391,11 +391,26 @@ namespace Mjolnir.CRM.Core
         {
             return context.OrganizationService.RetrieveMultiple(new FetchExpression(fetchXml));
         }
-        public async Task<EntityCollection> RetrieveMultipleByAttributeExactValueAsync(string fetchXml)
+        public async Task<EntityCollection> RetrieveMultipleAsync(string fetchXml)
         {
             var t = Task.Factory.StartNew(() =>
             {
                 return RetrieveMultiple(fetchXml);
+            });
+
+            return await t;
+        }
+
+
+        public EntityCollection RetrieveMultiple(QueryExpression query)
+        {
+            return context.OrganizationService.RetrieveMultiple(query);
+        }
+        public async Task<EntityCollection> RetrieveMultipleAsync(QueryExpression query)
+        {
+            var t = Task.Factory.StartNew(() =>
+            {
+                return RetrieveMultiple(query);
             });
 
             return await t;

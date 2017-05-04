@@ -17,7 +17,7 @@ namespace Mjolnir.CRM.Core
     {
         protected CrmContext PluginContext { get; private set; }
 
-        public void Execute(IServiceProvider serviceProvider)
+        public async void Execute(IServiceProvider serviceProvider)
         {
             var pluginExecutionContext = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
             var organizationServiceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
@@ -29,7 +29,7 @@ namespace Mjolnir.CRM.Core
 
             //Get trace configurations
             var crmSettingEntityManager = new CrmSettingManager(PluginContext);
-            var configuration = crmSettingEntityManager.GetCrmSettingByKey(Constants.CrmSettingKeys.CrmTraceLevel);
+            var configuration = await crmSettingEntityManager.GetCrmSettingByKeyAsync(Constants.CrmSettingKeys.CrmTraceLevel);
 
             if (configuration != null && configuration.TraceLevelSettingOptionSet != null)
             {

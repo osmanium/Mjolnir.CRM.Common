@@ -18,7 +18,10 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var roleEntityManager = new RoleManager(CrmContext);
 
-            var adminRole = roleEntityManager.GetRoleByName("System Administrator");
+            var task = roleEntityManager.GetRoleByNameAsync("System Administrator");
+            task.Wait();
+
+            var adminRole = task.Result;
 
             Assert.IsNotNull(adminRole);
         }
@@ -28,7 +31,10 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var roleEntityManager = new RoleManager(CrmContext);
 
-            var roles = roleEntityManager.GetAllRootLevelRoles();
+            var task = roleEntityManager.GetAllRootLevelRolesAsync();
+            task.Wait();
+
+            var roles = task.Result;
 
             Assert.IsNotNull(roles);
             Assert.IsTrue(roles.Any());
@@ -40,8 +46,15 @@ namespace Mjolnir.CRM.Core.Tests
         public void should_compare_entity_records_same()
         {
             var roleEntityManager = new RoleManager(CrmContext);
-            var adminRole = roleEntityManager.GetRoleByName("System Administrator");
-            var adminRole2 = roleEntityManager.GetRoleByName("System Administrator");
+
+            var task = roleEntityManager.GetRoleByNameAsync("System Administrator");
+            var task2 = roleEntityManager.GetRoleByNameAsync("System Administrator");
+
+            task.Wait();
+            task2.Wait();
+            
+            var adminRole = task.Result;
+            var adminRole2 = task2.Result;
 
             Assert.IsTrue(adminRole.Compare(adminRole2).IsEqual);
         }
@@ -50,8 +63,15 @@ namespace Mjolnir.CRM.Core.Tests
         public void should_compare_entity_records_different()
         {
             var roleEntityManager = new RoleManager(CrmContext);
-            var adminRole = roleEntityManager.GetRoleByName("System Administrator");
-            var adminRole2 = roleEntityManager.GetRoleByName("System Customizer");
+
+            var task = roleEntityManager.GetRoleByNameAsync("System Administrator");
+            var task2 = roleEntityManager.GetRoleByNameAsync("System Customizer");
+
+            task.Wait();
+            task2.Wait();
+
+            var adminRole = task.Result;
+            var adminRole2 = task2.Result;
 
             Assert.IsFalse(adminRole.Compare(adminRole2).IsEqual);
         }

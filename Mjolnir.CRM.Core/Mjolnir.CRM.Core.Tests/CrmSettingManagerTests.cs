@@ -41,15 +41,22 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var crmSettingManager = new CrmSettingManager(CrmContext);
 
-            var crmSetting = crmSettingManager.GetCrmSettingByKey(CRM_SETTING_KEY);
+            var task = crmSettingManager.GetCrmSettingByKeyAsync(CRM_SETTING_KEY);
+            task.Wait();
 
-            crmSettingManager.DeleteById(crmSetting.Id);
+            var crmSetting = task.Result;
 
-            var crmSetting_After_Delete = crmSettingManager.GetCrmSettingByKey(CRM_SETTING_KEY);
+            var task2 = crmSettingManager.DeleteByIdAsync(crmSetting.Id);
+            task2.Wait();
 
-            Assert.AreNotEqual(null, crmSetting_After_Delete);
+             var task3 = crmSettingManager.GetCrmSettingByKeyAsync(CRM_SETTING_KEY);
+            task3.Wait();
+
+            var crmSetting_After_Delete = task3.Result;
+
+            Assert.AreEqual(null, crmSetting_After_Delete);
         }
 
-        
+
     }
 }

@@ -13,7 +13,7 @@ namespace Mjolnir.CRM.Sdk.Extensions
             where TEntity : EntityBase, new()
         {
             if (entityCollection != null && entityCollection.Entities.Any())
-                return entityCollection.Entities.Select(s => s.ToGenericEntity<TEntity>()).ToList();
+                return entityCollection.Entities.Select(s => s.ToSpecificEntity<TEntity>()).ToList();
 
             return null;
         }

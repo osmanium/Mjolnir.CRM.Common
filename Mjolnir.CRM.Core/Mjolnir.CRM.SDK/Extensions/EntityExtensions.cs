@@ -24,7 +24,7 @@ namespace Mjolnir.CRM.Sdk.Extensions
             }
         }
 
-        public static T ToGenericEntity<T>(this Entity sourceEntity)
+        public static T ToSpecificEntity<T>(this Entity sourceEntity)
         where T : Entity, new()
         {
             if (typeof(T) == typeof(Entity))

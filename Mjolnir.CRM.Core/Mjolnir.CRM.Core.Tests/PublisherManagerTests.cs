@@ -41,7 +41,10 @@ namespace Mjolnir.CRM.Core.Tests
             var publisherManager = new PublisherManager(CrmContext);
 
             //Get the publisher
-            var publishers = publisherManager.RetrieveMultipleByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, PUBLISHER_UNIQUE_NAME);
+            var task = publisherManager.RetrieveMultipleByAttributeExactValueAsync(EntityAttributes.PublisherEntityAttributes.UniqueName, PUBLISHER_UNIQUE_NAME);
+            task.Wait();
+
+            var publishers = task.Result;
 
             //Delete publisher
             publisherManager.DeleteById(publishers.Entities.First().Id);

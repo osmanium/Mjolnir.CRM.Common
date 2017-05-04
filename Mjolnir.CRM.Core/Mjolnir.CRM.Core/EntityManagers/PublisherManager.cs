@@ -34,13 +34,13 @@ namespace Mjolnir.CRM.Core.EntityManagers
         }
 
 
-        public PublisherEntity GetPublisherByUniqueName(string publisherUniqueName)
+        public async Task<PublisherEntity> GetPublisherByUniqueNameAsync(string publisherUniqueName)
         {
             try
             {
                 context.TracingService.TraceVerbose("GetPublisherByUniqueName started.");
 
-                return RetrieveFirstByAttributeExactValue(EntityAttributes.PublisherEntityAttributes.UniqueName, publisherUniqueName);
+                return await RetrieveFirstByAttributeExactValueAsync(EntityAttributes.PublisherEntityAttributes.UniqueName, publisherUniqueName);
             }
             catch (Exception ex)
             {

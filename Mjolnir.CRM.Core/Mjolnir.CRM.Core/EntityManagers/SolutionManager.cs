@@ -14,6 +14,7 @@ using Mjolnir.CRM.Sdk.Extensions;
 namespace Mjolnir.CRM.Core.EntityManagers
 {
     //TODO : Do not use Entity as input or output, use real entity type
+    //TODO : Convert to async methods
 
     public class SolutionManager : EntityManagerBase<SolutionEntity>
     {
@@ -282,7 +283,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 var newSolutionId = this.context.OrganizationService.Create(solution);
                 solution.Attributes[EntityAttributes.SolutionEntityAttributes.IdFieldName] = newSolutionId;
 
-                return solution.ToGenericEntity<SolutionEntity>();
+                return solution.ToSpecificEntity<SolutionEntity>();
             }
             catch (Exception ex)
             {

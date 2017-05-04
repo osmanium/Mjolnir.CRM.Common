@@ -16,7 +16,10 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var businessUnitEntityManager = new BusinessUnitManager(CrmContext);
 
-            var common = businessUnitEntityManager.GetBusinessUnitByName("Common");
+            var task = businessUnitEntityManager.GetBusinessUnitByNameAsync("Common");
+            task.Wait();
+
+            var common = task.Result;
             Assert.AreEqual("Common", common.Name);
         }
 
@@ -25,7 +28,7 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var businessUnitEntityManager = new BusinessUnitManager(CrmContext);
 
-            var root = businessUnitEntityManager.GetRootBusinessUnit();
+            var root = businessUnitEntityManager.GetRootBusinessUnitAsync();
             Assert.IsNotNull(root);
         }
     }

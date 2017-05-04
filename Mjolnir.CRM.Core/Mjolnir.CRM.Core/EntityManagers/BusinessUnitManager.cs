@@ -27,14 +27,14 @@ namespace Mjolnir.CRM.Core.EntityManagers
             : base(context, EntityAttributes.BusinessUnitEntityAttributes.EntityName)
         { }
 
-        public BusinessUnitEntity GetBusinessUnitByName(string businessUnitName)
+        public async Task<BusinessUnitEntity> GetBusinessUnitByNameAsync(string businessUnitName)
         {
-            return RetrieveFirstByAttributeExactValue(EntityAttributes.BusinessUnitEntityAttributes.Name, businessUnitName);
+            return await RetrieveFirstByAttributeExactValueAsync(EntityAttributes.BusinessUnitEntityAttributes.Name, businessUnitName);
         }
 
-        public BusinessUnitEntity GetRootBusinessUnit()
+        public async Task<BusinessUnitEntity> GetRootBusinessUnitAsync()
         {
-            return RetrieveFirst(new List<ConditionExpression>()
+            return await RetrieveFirstAsync(new List<ConditionExpression>()
             {
                 new ConditionExpression(EntityAttributes.BusinessUnitEntityAttributes.ParentBusinessUnitId, ConditionOperator.Null)
             });
