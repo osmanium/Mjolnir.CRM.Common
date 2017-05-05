@@ -29,7 +29,7 @@ namespace Mjolnir.CRM.Sdk.Entities
 
         }
 
-        public Guid IdFieldName
+        public Guid? IdFieldName
         {
             get
             {

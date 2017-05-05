@@ -50,7 +50,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
         
-        public int IntSetting
+        public int? IntSetting
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public decimal DecimalSetting
+        public decimal? DecimalSetting
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool BoolSetting
+        public bool? BoolSetting
         {
             get
             {
@@ -110,7 +110,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public DateTime DateTimeSetting
+        public DateTime? DateTimeSetting
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public int BusinessUnitSetting
+        public int? BusinessUnitSetting
         {
             get
             {

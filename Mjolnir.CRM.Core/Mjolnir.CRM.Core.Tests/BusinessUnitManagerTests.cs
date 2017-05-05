@@ -14,7 +14,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_get_business_unit_by_name()
         {
-            var businessUnitEntityManager = new BusinessUnitManager(CrmContext);
+            var businessUnitEntityManager = new BusinessUnitManager(SourceCrmContext);
 
             var task = businessUnitEntityManager.GetBusinessUnitByNameAsync("Common");
             task.Wait();
@@ -26,7 +26,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_get_root_business_unit()
         {
-            var businessUnitEntityManager = new BusinessUnitManager(CrmContext);
+            var businessUnitEntityManager = new BusinessUnitManager(SourceCrmContext);
 
             var root = businessUnitEntityManager.GetRootBusinessUnitAsync();
             Assert.IsNotNull(root);

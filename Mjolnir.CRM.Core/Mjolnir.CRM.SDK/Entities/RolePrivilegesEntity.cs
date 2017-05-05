@@ -33,7 +33,7 @@ namespace Mjolnir.CRM.Sdk.Entities
 
         }
 
-        public Guid IdFieldName
+        public Guid? IdFieldName
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid RoleIdFieldName
+        public Guid? RoleIdFieldName
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid PrivilegeId
+        public Guid? PrivilegeId
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid SolutionId
+        public Guid? SolutionId
         {
             get
             {
@@ -81,7 +81,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public int PrivilegeDepthMask
+        public int? PrivilegeDepthMask
         {
             get
             {
@@ -93,7 +93,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool IsManaged
+        public bool? IsManaged
         {
             get
             {

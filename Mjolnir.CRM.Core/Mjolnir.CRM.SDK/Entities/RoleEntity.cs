@@ -38,7 +38,7 @@ namespace Mjolnir.CRM.Sdk.Entities
 
         }
 
-        public Guid IdFieldName
+        public Guid? IdFieldName
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid BusinessUnitId
+        public Guid? BusinessUnitId
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid ParentRoleId
+        public Guid? ParentRoleId
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid ParentRootRoleId
+        public Guid? ParentRootRoleId
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid RoleTemplateId
+        public Guid? RoleTemplateId
         {
             get
             {
@@ -110,7 +110,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid SolutionId
+        public Guid? SolutionId
         {
             get
             {
@@ -122,7 +122,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool IsManaged
+        public bool? IsManaged
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool IsCustomizable
+        public bool? IsCustomizable
         {
             get
             {

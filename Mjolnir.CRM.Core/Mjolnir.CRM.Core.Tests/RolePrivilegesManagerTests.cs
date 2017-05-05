@@ -14,13 +14,13 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_retrieve_role_privileges()
         {
-            var roleManager = new RoleManager(CrmContext);
+            var roleManager = new RoleManager(SourceCrmContext);
             var task = roleManager.GetRoleByNameAsync("System Administrator");
             task.Wait();
 
             var adminRole = task.Result;
 
-            var rolePrivilegesManager = new RolePrivilegesManager(CrmContext);
+            var rolePrivilegesManager = new RolePrivilegesManager(SourceCrmContext);
             var task2 = rolePrivilegesManager.GetRolePrivilegesAsync(adminRole.Id);
             task.Wait();
 

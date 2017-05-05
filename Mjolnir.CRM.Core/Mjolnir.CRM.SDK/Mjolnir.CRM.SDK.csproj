@@ -79,10 +79,13 @@
     <Compile Include="EntityBase.cs" />
     <Compile Include="Extensions\EntityCollectionExtensions.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
+    <Compile Include="Extensions\EntityMetadataExtensions.cs" />
     <Compile Include="Optionsets\WebResourceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObjects\ComparisonError.cs" />
     <Compile Include="ValueObjects\EntityComparisonConfiguration.cs" />
-    <Compile Include="ValueObjects\EntityComparisonResult.cs" />
+    <Compile Include="ValueObjects\ComparisonResult.cs" />
+    <Compile Include="ValueObjects\EntityMetadataComparisonConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Mjolnir.CRM.Sdk.snk" />

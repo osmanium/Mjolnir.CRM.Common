@@ -20,7 +20,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_create_publisher()
         {
-            var publisherManager = new PublisherManager(CrmContext);
+            var publisherManager = new PublisherManager(SourceCrmContext);
 
             var publisherEntity = new PublisherEntity();
             publisherEntity.FriendlyName = PUBLISHER_FRIENDLY_NAME;
@@ -38,7 +38,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_delete_publisher()
         {
-            var publisherManager = new PublisherManager(CrmContext);
+            var publisherManager = new PublisherManager(SourceCrmContext);
 
             //Get the publisher
             var task = publisherManager.RetrieveMultipleByAttributeExactValueAsync(EntityAttributes.PublisherEntityAttributes.UniqueName, PUBLISHER_UNIQUE_NAME);

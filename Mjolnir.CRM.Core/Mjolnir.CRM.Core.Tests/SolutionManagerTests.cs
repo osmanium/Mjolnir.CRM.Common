@@ -17,7 +17,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_create_solution()
         {
-            var solutionManager = new SolutionManager(CrmContext);
+            var solutionManager = new SolutionManager(SourceCrmContext);
 
             //solutionManager.CreateSolution()
 

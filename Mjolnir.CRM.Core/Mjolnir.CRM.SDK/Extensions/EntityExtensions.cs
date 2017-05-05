@@ -43,66 +43,66 @@ namespace Mjolnir.CRM.Sdk.Extensions
             return t;
         }
 
-        public static EntityComparisonResult Compare(this Entity sourceEntity, Entity targetEntity, EntityComparisonConfiguration comparisionConfig = null)
+        public static ComparisonResult CompareValues(this Entity sourceEntity, Entity targetEntity, EntityComparisonConfiguration comparisonConfig = null)
         {
-            var isEqual = false;
-            var reasons = new List<string>();
+            ComparisonResult comparisonResult = null;
+            var comparisonErrors = new List<ComparisonError>();
 
-            if (comparisionConfig == null)
-                comparisionConfig = EntityComparisonConfiguration.Default;
+            if (comparisonConfig == null)
+                comparisonConfig = EntityComparisonConfiguration.Default;
 
             if (sourceEntity.Id != targetEntity.Id)
             {
-                reasons.Add($"Id's are different");
-                if (!comparisionConfig.IsFullComparison)
-                    return new EntityComparisonResult(isEqual, reasons);
+                comparisonErrors.Add(new ComparisonError(GetValueInString(sourceEntity.Id), GetValueInString(targetEntity.Id), $"Id's are different"));
+                if (!comparisonConfig.ContinueOnDifference)
+                    return new ComparisonResult(false, comparisonErrors);
             }
 
             if (sourceEntity.LogicalName != targetEntity.LogicalName)
             {
-                reasons.Add($"LogicalName'a are different");
-                if (!comparisionConfig.IsFullComparison)
-                    return new EntityComparisonResult(isEqual, reasons);
+                comparisonErrors.Add(new ComparisonError(sourceEntity.LogicalName, targetEntity.LogicalName, $"LogicalName'a are different"));
+                if (!comparisonConfig.ContinueOnDifference)
+                    return new ComparisonResult(false, comparisonErrors);
             }
 
             foreach (var sourceKey in sourceEntity.Attributes.Keys)
             {
-                if (comparisionConfig.IgnoredAttributeKeys.Contains(sourceKey))
+                if (comparisonConfig.IgnoredAttributeKeys.Contains(sourceKey))
                     continue;
 
                 if (targetEntity.Contains(sourceKey))
                 {
                     if (!CompareValue(sourceEntity[sourceKey], targetEntity[sourceKey]))
                     {
-                        reasons.Add($"{sourceKey} Attributes are different, source : {sourceEntity[sourceKey]}, target {targetEntity[sourceKey]}");
-                        if (!comparisionConfig.IsFullComparison)
-                            return new EntityComparisonResult(isEqual, reasons);
+                        comparisonErrors.Add(new ComparisonError(GetValueInString(sourceEntity[sourceKey]), GetValueInString(targetEntity[sourceKey]), $"{sourceKey} attributes have different values"));
+                        if (!comparisonConfig.ContinueOnDifference)
+                            return new ComparisonResult(false, comparisonErrors);
                     }
                 }
                 else
                 {
-                    reasons.Add($"Target does not contain key {sourceKey}");
-                    if (!comparisionConfig.IsFullComparison)
-                        return new EntityComparisonResult(isEqual, reasons);
+                    comparisonErrors.Add(new ComparisonError(GetValueInString(sourceEntity[sourceKey]), null, $"Target does not contain key {sourceKey}"));
+                    if (!comparisonConfig.ContinueOnDifference)
+                        return new ComparisonResult(false, comparisonErrors);
                 }
             }
 
             //Check only keys which are in target but not in source
             foreach (var targetKey in targetEntity.Attributes.Where(w => !sourceEntity.Attributes.Keys.Contains(w.Key)))
             {
-                if (comparisionConfig.IgnoredAttributeKeys.Contains(targetKey.Key))
+                if (comparisonConfig.IgnoredAttributeKeys.Contains(targetKey.Key))
                     continue;
 
-                reasons.Add($"Source does not contain key {targetKey}");
-                if (!comparisionConfig.IsFullComparison)
-                    return new EntityComparisonResult(isEqual, reasons);
+                comparisonErrors.Add(new ComparisonError(null, GetValueInString(targetEntity[targetKey.Key]), $"Source does not contain key {targetKey.Key}"));
+                if (!comparisonConfig.ContinueOnDifference)
+                    return new ComparisonResult(false, comparisonErrors);
             }
 
-            //If there is no error, it should be same
-            if (!reasons.Any())
-                isEqual = true;
 
-            return new EntityComparisonResult(isEqual, reasons);
+            if (comparisonResult != null)
+                return comparisonResult;
+            else
+                return new ComparisonResult(true, null);
         }
 
         private static bool CompareValue(object sourceValue, object targetValue)
@@ -203,6 +203,79 @@ namespace Mjolnir.CRM.Sdk.Extensions
             //TODO : Check for customer lookup is regular lookup
 
             return true;
+        }
+
+        public static string GetValueInString(object valueObject)
+        {
+            if (valueObject == null)
+            {
+                return "{null}";
+            }
+
+            else if (valueObject is string)
+            {
+                return valueObject as string;
+            }
+
+            else if (valueObject is EntityReference)
+            {
+                var tmpObject = valueObject as EntityReference;
+
+                return $"{{Id: {tmpObject.Id}, Name: {tmpObject.Name}, LogicalName: {tmpObject.LogicalName}}}";
+            }
+
+            else if (valueObject is AliasedValue)
+            {
+                return GetValueInString(valueObject as AliasedValue);
+            }
+
+            else if (valueObject is int)
+            {
+                return ((int)valueObject).ToString();
+            }
+
+            else if (valueObject is Guid)
+            {
+                return ((Guid)valueObject).ToString();
+            }
+
+            else if (valueObject is OptionSetValue)
+            {
+                return (valueObject as OptionSetValue).Value.ToString();
+            }
+
+            else if (valueObject is bool)
+            {
+                return ((bool)valueObject).ToString();
+            }
+
+            else if (valueObject is DateTime)
+            {
+                return ((DateTime)valueObject).Ticks.ToString();
+            }
+
+            else if (valueObject is decimal)
+            {
+                return ((decimal)valueObject).ToString();
+            }
+
+            else if (valueObject is Money)
+            {
+                return ((Money)valueObject).Value.ToString();
+            }
+
+            else if (valueObject is long)
+            {
+                return ((long)valueObject).ToString();
+            }
+
+            else if (valueObject is double)
+            {
+                return ((double)valueObject).ToString();
+            }
+
+
+            return $"Not Implemented Type for String: {valueObject.GetType()}";
         }
     }
 }

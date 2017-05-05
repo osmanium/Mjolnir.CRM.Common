@@ -27,7 +27,7 @@ namespace Mjolnir.CRM.Sdk.Entities
         {
         }
 
-        public Guid IdFieldName
+        public Guid? IdFieldName
         {
             get
             {
@@ -39,7 +39,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid ParentBusinessUnitId
+        public Guid? ParentBusinessUnitId
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public Guid CalendarId
+        public Guid? CalendarId
         {
             get
             {

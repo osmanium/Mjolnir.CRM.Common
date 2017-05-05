@@ -18,7 +18,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_create_new_crmsetting()
         {
-            var crmSettingManager = new CrmSettingManager(CrmContext);
+            var crmSettingManager = new CrmSettingManager(SourceCrmContext);
 
             var crmSetting = new CrmSettingEntity();
             crmSetting.BoolSetting = true;
@@ -39,7 +39,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_delete_crmsetting()
         {
-            var crmSettingManager = new CrmSettingManager(CrmContext);
+            var crmSettingManager = new CrmSettingManager(SourceCrmContext);
 
             var task = crmSettingManager.GetCrmSettingByKeyAsync(CRM_SETTING_KEY);
             task.Wait();

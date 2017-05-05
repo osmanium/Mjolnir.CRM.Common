@@ -39,7 +39,7 @@ namespace Mjolnir.CRM.Sdk.Entities
 
         }
 
-        public Guid IdFieldName
+        public Guid? IdFieldName
         {
             get
             {
@@ -63,7 +63,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public int AccessRight
+        public int? AccessRight
         {
             get
             {
@@ -75,7 +75,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool CanBeBasic
+        public bool? CanBeBasic
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool CanBeDeep
+        public bool? CanBeDeep
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool CanBeEntityReference
+        public bool? CanBeEntityReference
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool CanBeGlobal
+        public bool? CanBeGlobal
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool CanBeLocal
+        public bool? CanBeLocal
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Mjolnir.CRM.Sdk.Entities
             }
         }
 
-        public bool CanBeParentEntityReference
+        public bool? CanBeParentEntityReference
         {
             get
             {

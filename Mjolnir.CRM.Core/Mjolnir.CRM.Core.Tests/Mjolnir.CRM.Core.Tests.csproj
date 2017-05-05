@@ -92,6 +92,7 @@
     <Compile Include="CrmSettingManagerTests.cs" />
     <Compile Include="CrmUnitTestBase.cs" />
     <Compile Include="EntityManagerBaseUnitTests.cs" />
+    <Compile Include="EntityMetadataManagerTests.cs" />
     <Compile Include="PublisherManagerTests.cs" />
     <Compile Include="RoleManagerTests.cs" />
     <Compile Include="RolePrivilegesManagerTests.cs" />

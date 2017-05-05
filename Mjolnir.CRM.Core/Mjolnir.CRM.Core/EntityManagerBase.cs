@@ -58,24 +58,7 @@ namespace Mjolnir.CRM.Core
 
         //    await t;
         //}
-
-
-        public T Execute<T>(OrganizationRequest request)
-            where T : OrganizationResponse
-        {
-            return context.OrganizationService.Execute(request) as T;
-        }
-        public async Task<T> ExecuteAsync<T>(OrganizationRequest request)
-            where T : OrganizationResponse
-        {
-            var t = Task.Factory.StartNew(() =>
-            {
-                return Execute<T>(request);
-            });
-
-            return await t;
-        }
-
+    
 
         public Guid Create(TEntity entity)
         {
@@ -336,6 +319,8 @@ namespace Mjolnir.CRM.Core
             return await t;
         }
 
+
+        //TODO : Change all EntitiCollection return types to List<TEntity>
 
         public EntityCollection RetrieveMultipleByAttributeExactValue(string attributeName, object value)
         {

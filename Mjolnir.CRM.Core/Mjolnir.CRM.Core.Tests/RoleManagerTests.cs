@@ -16,7 +16,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_get_role_by_name()
         {
-            var roleEntityManager = new RoleManager(CrmContext);
+            var roleEntityManager = new RoleManager(SourceCrmContext);
 
             var task = roleEntityManager.GetRoleByNameAsync("System Administrator");
             task.Wait();
@@ -29,7 +29,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_get_all_roles()
         {
-            var roleEntityManager = new RoleManager(CrmContext);
+            var roleEntityManager = new RoleManager(SourceCrmContext);
 
             var task = roleEntityManager.GetAllRootLevelRolesAsync();
             task.Wait();
@@ -45,7 +45,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_compare_entity_records_same()
         {
-            var roleEntityManager = new RoleManager(CrmContext);
+            var roleEntityManager = new RoleManager(SourceCrmContext);
 
             var task = roleEntityManager.GetRoleByNameAsync("System Administrator");
             var task2 = roleEntityManager.GetRoleByNameAsync("System Administrator");
@@ -56,13 +56,13 @@ namespace Mjolnir.CRM.Core.Tests
             var adminRole = task.Result;
             var adminRole2 = task2.Result;
 
-            Assert.IsTrue(adminRole.Compare(adminRole2).IsEqual);
+            Assert.IsTrue(adminRole.CompareValues(adminRole2).IsEqual);
         }
 
         [TestMethod]
         public void should_compare_entity_records_different()
         {
-            var roleEntityManager = new RoleManager(CrmContext);
+            var roleEntityManager = new RoleManager(SourceCrmContext);
 
             var task = roleEntityManager.GetRoleByNameAsync("System Administrator");
             var task2 = roleEntityManager.GetRoleByNameAsync("System Customizer");
@@ -73,7 +73,7 @@ namespace Mjolnir.CRM.Core.Tests
             var adminRole = task.Result;
             var adminRole2 = task2.Result;
 
-            Assert.IsFalse(adminRole.Compare(adminRole2).IsEqual);
+            Assert.IsFalse(adminRole.CompareValues(adminRole2).IsEqual);
         }
     }
 }

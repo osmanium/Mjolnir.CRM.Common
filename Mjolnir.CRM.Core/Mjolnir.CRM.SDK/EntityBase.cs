@@ -44,7 +44,7 @@ namespace Mjolnir.CRM.Sdk
 
         #region GetAttribute Helpers
 
-        public Guid GetGuidAttributeValue(string attributeKey)
+        public Guid? GetGuidAttributeValue(string attributeKey)
         {
             if (Attributes.ContainsKey(attributeKey))
             {
@@ -57,7 +57,7 @@ namespace Mjolnir.CRM.Sdk
                     return this.GetAttributeValue<Guid>(attributeKey);
                 }
             }
-            else return Guid.Empty;
+            else return null;
         }
 
         public string GetStringAttributeValue(string attributeKey)
@@ -73,10 +73,10 @@ namespace Mjolnir.CRM.Sdk
                     return this.GetAttributeValue<string>(attributeKey);
                 }
             }
-            else return string.Empty;
+            else return null;
         }
 
-        public int GetIntigerAttributeValue(string attributeKey)
+        public int? GetIntigerAttributeValue(string attributeKey)
         {
             if (Attributes.ContainsKey(attributeKey))
             {
@@ -89,7 +89,7 @@ namespace Mjolnir.CRM.Sdk
                     return this.GetAttributeValue<int>(attributeKey);
                 }
             }
-            else return 0;
+            else return null;
         }
 
         public Money GetMoneyAttributeValue(string attributeKey)
@@ -105,10 +105,10 @@ namespace Mjolnir.CRM.Sdk
                     return this.GetAttributeValue<Money>(attributeKey);
                 }
             }
-            else return new Money(0);
+            else return null;
         }
 
-        public bool GetBoolAttributeValue(string attributeKey)
+        public bool? GetBoolAttributeValue(string attributeKey)
         {
             if (Attributes.ContainsKey(attributeKey))
             {
@@ -121,10 +121,10 @@ namespace Mjolnir.CRM.Sdk
                     return this.GetAttributeValue<bool>(attributeKey);
                 }
             }
-            else return false;
+            else return null;
         }
 
-        public DateTime GetDateTimeAttributeValue(string attributeKey)
+        public DateTime? GetDateTimeAttributeValue(string attributeKey)
         {
             if (Attributes.ContainsKey(attributeKey))
             {
@@ -137,10 +137,10 @@ namespace Mjolnir.CRM.Sdk
                     return this.GetAttributeValue<DateTime>(attributeKey);
                 }
             }
-            else return DateTime.MinValue;
+            else return null;
         }
 
-        public decimal GetDecimalAttributeValue(string attributeKey)
+        public decimal? GetDecimalAttributeValue(string attributeKey)
         {
             if (Attributes.ContainsKey(attributeKey))
             {
@@ -153,7 +153,7 @@ namespace Mjolnir.CRM.Sdk
                     return this.GetAttributeValue<decimal>(attributeKey);
                 }
             }
-            else return 0;
+            else return null;
         }
 
         public EntityReference GetEntityReferenceAttributeValue(string attributeKey)

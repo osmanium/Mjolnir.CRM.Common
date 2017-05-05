@@ -16,7 +16,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_retrieve_all_js_web_resource_metadata()
         {
-            var webResourceManager = new WebResourceManager(CrmContext);
+            var webResourceManager = new WebResourceManager(SourceCrmContext);
 
             var task = webResourceManager.GetAllWebResourcesMetadataAsync(Sdk.Optionsets.WebResourceType.JScript);
             task.Wait();
@@ -33,7 +33,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_retrieve_js_content()
         {
-            var webResourceManager = new WebResourceManager(CrmContext);
+            var webResourceManager = new WebResourceManager(SourceCrmContext);
 
             string[] webResourceIds = new string[]
             {
@@ -57,7 +57,7 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_retrieve_webresource_by_name()
         {
-            var webResourceManager = new WebResourceManager(CrmContext);
+            var webResourceManager = new WebResourceManager(SourceCrmContext);
 
             var task = webResourceManager.GetWebResourceBySchemaNameAsync("cc_MscrmControls.Multimedia.MultimediaPlayerControl/libs/jquery_2.1.1.js");
             task.Wait();
