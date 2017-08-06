@@ -21,6 +21,8 @@ namespace Mjolnir.CRM.Sdk.ValueObjects
 
         public bool IsTargetToSourceAttributeCheck { get; set; }
 
+        public bool IsFullComparison { get; set; }
+
         static EntityComparisonConfiguration()
         {
             _default = new EntityComparisonConfiguration()
@@ -29,7 +31,8 @@ namespace Mjolnir.CRM.Sdk.ValueObjects
                 IsIdIgnore = false,
                 IsLogicalNameIgnore = false,
                 IsTargetToSourceAttributeCheck = false,
-                IgnoredAttributeKeys = new List<string>()
+                IgnoredAttributeKeys = new List<string>(),
+                IsFullComparison = false
             };
         }
 

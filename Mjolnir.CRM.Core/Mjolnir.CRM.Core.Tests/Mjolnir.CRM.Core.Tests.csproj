@@ -91,6 +91,7 @@
     <Compile Include="BusinessUnitManagerTests.cs" />
     <Compile Include="CrmSettingManagerTests.cs" />
     <Compile Include="CrmUnitTestBase.cs" />
+    <Compile Include="EntityFormManagerTests.cs" />
     <Compile Include="EntityManagerBaseUnitTests.cs" />
     <Compile Include="EntityMetadataManagerTests.cs" />
     <Compile Include="PublisherManagerTests.cs" />

@@ -75,11 +75,14 @@
     <Compile Include="Entities\RoleEntity.cs" />
     <Compile Include="Entities\SolutionComponentEntity.cs" />
     <Compile Include="Entities\SolutionEntity.cs" />
+    <Compile Include="Entities\SystemFormEntity.cs" />
     <Compile Include="Entities\WebResourceEntity.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="Extensions\EntityCollectionExtensions.cs" />
     <Compile Include="Extensions\EntityExtensions.cs" />
     <Compile Include="Extensions\EntityMetadataExtensions.cs" />
+    <Compile Include="Optionsets\FormActivationState.cs" />
+    <Compile Include="Optionsets\SystemFormType.cs" />
     <Compile Include="Optionsets\WebResourceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueObjects\ComparisonError.cs" />

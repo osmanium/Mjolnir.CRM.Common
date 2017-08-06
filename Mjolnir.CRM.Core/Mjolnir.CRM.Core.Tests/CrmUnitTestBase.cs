@@ -25,8 +25,8 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var sourceUserName = ConfigurationManager.AppSettings["SourceUsername"];
             var sourceServer = ConfigurationManager.AppSettings["SourceServer"];
-            var sourceDomain = ConfigurationManager.AppSettings["SourcePassword"];
-            var sourcePassword = ConfigurationManager.AppSettings["SourceDomain"];
+            var sourceDomain = ConfigurationManager.AppSettings["SourceDomain"];
+            var sourcePassword = ConfigurationManager.AppSettings["SourcePassword"];
             var sourcePort = ConfigurationManager.AppSettings["SourcePort"];
             var sourceOrganizationName = ConfigurationManager.AppSettings["SourceOrganizationName"];
             var sourceUseSSL = Boolean.Parse(ConfigurationManager.AppSettings["SourceUseSSL"]);
@@ -39,8 +39,8 @@ namespace Mjolnir.CRM.Core.Tests
         {
             var targetUserName = ConfigurationManager.AppSettings["TargetUsername"];
             var targetServer = ConfigurationManager.AppSettings["TargetServer"];
-            var targetDomain = ConfigurationManager.AppSettings["TargetPassword"];
-            var targetPassword = ConfigurationManager.AppSettings["TargetDomain"];
+            var targetDomain = ConfigurationManager.AppSettings["TargetDomain"];
+            var targetPassword = ConfigurationManager.AppSettings["TargetPassword"];
             var targetPort = ConfigurationManager.AppSettings["TargetPort"];
             var targetOrganizationName = ConfigurationManager.AppSettings["TargetOrganizationName"];
             var targetUseSSL = Boolean.Parse(ConfigurationManager.AppSettings["TargetUseSSL"]);
