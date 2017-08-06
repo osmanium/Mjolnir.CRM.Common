@@ -30,7 +30,32 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
             return response.EntityMetadata;
         }
-        
-        
+
+        public async Task<EntityMetadata> GetEntityMetadataByEntityDisplayName(string entityDisplayName, EntityFilters filter = EntityFilters.All)
+        {
+            var retrieveRequest = new RetrieveAllEntitiesRequest()
+            {
+                EntityFilters = filter,
+                RetrieveAsIfPublished = true
+            };
+
+            var response = await ExecuteAsync<RetrieveAllEntitiesResponse>(retrieveRequest);
+
+            if (response != null && response.EntityMetadata.Any())
+            {
+                foreach (var entityMetadata in response.EntityMetadata)
+                {
+                    var match = entityMetadata
+                                    .DisplayName
+                                    .LocalizedLabels
+                                    .Where(w => w.Label.Equals(entityDisplayName, StringComparison.InvariantCultureIgnoreCase));
+
+                    if (match != null && match.Any())
+                        return entityMetadata;
+                }
+            }
+
+            return null;
+        }
     }
 }

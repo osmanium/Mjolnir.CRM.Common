@@ -38,7 +38,6 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
             try
             {
-
                 EntityMetadataManager entityMetadataManager = new EntityMetadataManager(context);
                 var entityMetadata = await entityMetadataManager.GetEntityMetadataByEntitySchemaName(entitySchemaName);
                 var objectTypeCode = entityMetadata.ObjectTypeCode;
@@ -70,6 +69,67 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
                 EntityMetadataManager entityMetadataManager = new EntityMetadataManager(context);
                 var entityMetadata = await entityMetadataManager.GetEntityMetadataByEntitySchemaName(entitySchemaName);
+                var objectTypeCode = entityMetadata.ObjectTypeCode;
+
+                var result = await RetrieveMultipleAsync(new List<ConditionExpression>()
+                {
+                    //ObjectTypecode field can be queried by schema name even though it returns string
+                    new ConditionExpression(EntityAttributes.SystemFormEntityAttributes.ObjectTypeCode, ConditionOperator.Equal,objectTypeCode),
+                    new ConditionExpression(EntityAttributes.SystemFormEntityAttributes.Name, ConditionOperator.Equal,formName)
+                });
+
+
+                if (result != null && result.Entities.Any())
+                {
+                    return result.Entities.First().ToSpecificEntity<SystemFormEntity>();
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+                return null;
+            }
+        }
+
+        public async Task<List<SystemFormEntity>> GetAllSystemFormsByEntityDisplayNameAsync(string entityDisplayName)
+        {
+            context.TracingService.TraceVerbose("GetAllSystemFormsByEntityDisplayNameAsync started.");
+
+            try
+            {
+                EntityMetadataManager entityMetadataManager = new EntityMetadataManager(context);
+                var entityMetadata = await entityMetadataManager.GetEntityMetadataByEntityDisplayName(entityDisplayName);
+                var objectTypeCode = entityMetadata.ObjectTypeCode;
+
+                //ObjectTypecode field can be queried by schema name even though it returns string
+                var result = RetrieveMultipleByAttributeExactValue(EntityAttributes.SystemFormEntityAttributes.ObjectTypeCode, objectTypeCode);
+
+                if (result != null && result.Entities.Any())
+                {
+                    //TODO : Return ToListAsync version
+                    return result.Entities.Select(s => s.ToSpecificEntity<SystemFormEntity>()).ToList();
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+                return null;
+            }
+        }
+
+        public async Task<SystemFormEntity> GetSystemFormByEntityDisplayNameAndFormNameAsync(string entityDisplayName, string formName)
+        {
+            context.TracingService.TraceVerbose("GetSystemFormByEntityDisplayNameAndFormNameAsync started.");
+
+            try
+            {
+
+                EntityMetadataManager entityMetadataManager = new EntityMetadataManager(context);
+                var entityMetadata = await entityMetadataManager.GetEntityMetadataByEntityDisplayName(entityDisplayName);
                 var objectTypeCode = entityMetadata.ObjectTypeCode;
 
                 var result = await RetrieveMultipleAsync(new List<ConditionExpression>()

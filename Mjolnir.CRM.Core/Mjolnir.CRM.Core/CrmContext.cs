@@ -16,8 +16,11 @@ namespace Mjolnir.CRM.Core
     public class CrmContext : IDisposable
     {
         public CrmLogger TracingService { get; private set; }
+
         public IPluginExecutionContext PluginExecutionContext { get; private set; }
+
         public IOrganizationService OrganizationService { get; private set; }
+
         public IServiceProvider ServiceProvider { get; private set; }
 
         public Guid UserId { get; private set; }
