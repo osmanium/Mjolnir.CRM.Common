@@ -451,12 +451,7 @@ namespace Mjolnir.CRM.Core
         }
         public async Task<EntityCollection> RetrieveMultipleAsync(List<ConditionExpression> conditions)
         {
-            var t = Task.Factory.StartNew(() =>
-            {
-                return RetrieveMultiple(conditions);
-            });
-
-            return await t;
+            return await Task.Factory.StartNew(() => RetrieveMultiple(conditions));
         }
 
         public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, string[] columns)
@@ -465,12 +460,7 @@ namespace Mjolnir.CRM.Core
         }
         public async Task<EntityCollection> RetrieveMultipleAsync(List<ConditionExpression> conditions, string[] columns)
         {
-            var t = Task.Factory.StartNew(() =>
-            {
-                return RetrieveMultiple(conditions, columns);
-            });
-
-            return await t;
+            return await Task.Factory.StartNew(() => RetrieveMultiple(conditions, columns));
         }
 
         public EntityCollection RetrieveMultiple(List<ConditionExpression> conditions, ColumnSet columns)

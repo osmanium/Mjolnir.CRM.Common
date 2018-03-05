@@ -11,9 +11,6 @@ namespace Mjolnir.CRM.Core.Tests
     [TestClass]
     public class SolutionManagerTests : CrmUnitTestBase
     {
-       
-
-
         [TestMethod]
         public void should_create_solution()
         {
@@ -22,6 +19,17 @@ namespace Mjolnir.CRM.Core.Tests
             //solutionManager.CreateSolution()
 
             //Assert.AreEqual(
+
+        }
+
+        [TestMethod]
+        public void should_retrieve_all_solutions()
+        {
+            var solutionManager = new SolutionManager(SourceCrmContext);
+
+            var allSolutionsTask = solutionManager.GetAllSolutionsAsync();
+            allSolutionsTask.Wait();
+            var result = allSolutionsTask.Result;
 
         }
     }

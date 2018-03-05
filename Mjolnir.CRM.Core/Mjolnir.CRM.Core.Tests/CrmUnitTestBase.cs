@@ -23,31 +23,14 @@ namespace Mjolnir.CRM.Core.Tests
 
         public void ConnectSourceCRM()
         {
-            var sourceUserName = ConfigurationManager.AppSettings["SourceUsername"];
-            var sourceServer = ConfigurationManager.AppSettings["SourceServer"];
-            var sourceDomain = ConfigurationManager.AppSettings["SourceDomain"];
-            var sourcePassword = ConfigurationManager.AppSettings["SourcePassword"];
-            var sourcePort = ConfigurationManager.AppSettings["SourcePort"];
-            var sourceOrganizationName = ConfigurationManager.AppSettings["SourceOrganizationName"];
-            var sourceUseSSL = Boolean.Parse(ConfigurationManager.AppSettings["SourceUseSSL"]);
-            var timeOutInMinutes = Int32.Parse(ConfigurationManager.AppSettings["TimeOutInMinutes"]);
-
-            SourceCrmContext = CrmConnection.ConnectCrm(sourceUserName, sourceServer, sourcePassword, sourceDomain, sourcePort, sourceOrganizationName, sourceUseSSL, timeOutInMinutes);
+            var sourceOrgConnectionString = ConfigurationManager.AppSettings["SourceOrgConnectionString"];
+            SourceCrmContext = CrmConnection.ConnectCrm(sourceOrgConnectionString);
         }
 
         public void ConnectTargetCRM()
         {
-            var targetUserName = ConfigurationManager.AppSettings["TargetUsername"];
-            var targetServer = ConfigurationManager.AppSettings["TargetServer"];
-            var targetDomain = ConfigurationManager.AppSettings["TargetDomain"];
-            var targetPassword = ConfigurationManager.AppSettings["TargetPassword"];
-            var targetPort = ConfigurationManager.AppSettings["TargetPort"];
-            var targetOrganizationName = ConfigurationManager.AppSettings["TargetOrganizationName"];
-            var targetUseSSL = Boolean.Parse(ConfigurationManager.AppSettings["TargetUseSSL"]);
-
-            var timeOutInMinutes = Int32.Parse(ConfigurationManager.AppSettings["TimeOutInMinutes"]);
-
-            TargetCrmContext = CrmConnection.ConnectCrm(targetUserName, targetServer, targetPassword, targetDomain, targetPort, targetOrganizationName, targetUseSSL, timeOutInMinutes);
+            var targetOrgConnectionString = ConfigurationManager.AppSettings["TargetOrgConnectionString"];
+            TargetCrmContext = CrmConnection.ConnectCrm(targetOrgConnectionString);
         }
     }
 }

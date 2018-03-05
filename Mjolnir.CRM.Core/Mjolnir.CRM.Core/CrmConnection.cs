@@ -15,15 +15,13 @@ namespace Mjolnir.CRM.Core
 {
     public static class CrmConnection
     {
-        public static CrmContext ConnectCrm(string userName, string serverName, string password, string domain, string port, string organization, bool useSSL, int timeOutInMinutes)
+        public static CrmContext ConnectCrm(string connectionString)
         {
-            CrmServiceClient _sourceCRMServiceClient = new CrmServiceClient(new NetworkCredential(userName, password, domain), serverName, port, organization, true, useSSL, null);
+            var sourceCrmServiceClient = new CrmServiceClient(connectionString);
             
-            CrmContext crmContext = new CrmContext(_sourceCRMServiceClient.OrganizationServiceProxy,
-                                  _sourceCRMServiceClient.OrganizationServiceProxy.CallerId,
-                                  new CrmLogger(new CrmExternalTracer()),
-                                  null,
-                                  null);
+            var crmContext = new CrmContext(sourceCrmServiceClient.OrganizationServiceProxy,
+                                  sourceCrmServiceClient.OrganizationServiceProxy.CallerId,
+                                  new CrmLogger(new CrmExternalTracer()));
             
             return crmContext;
         }

@@ -5,9 +5,7 @@ using Mjolnir.CRM.Core.Enums;
 using Mjolnir.CRM.Sdk.Entities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Mjolnir.CRM.Sdk.Extensions;
 
@@ -18,33 +16,27 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
     public class SolutionManager : EntityManagerBase<SolutionEntity>
     {
-        internal override string[] DefaultFields
-        {
-            get
-            {
-                return new string[] {
-                    EntityAttributes.PublisherEntityAttributes.FriendlyName,
-                    EntityAttributes.PublisherEntityAttributes.UniqueName,
-                    EntityAttributes.PublisherEntityAttributes.CustomizationPrefix,
-                    EntityAttributes.PublisherEntityAttributes.Description,
-                    EntityAttributes.PublisherEntityAttributes.SupportingWebsiteUrl,
-                    EntityAttributes.PublisherEntityAttributes.EMailAddress
-                };
-            }
-        }
+        internal override string[] DefaultFields => new[] {
+            EntityAttributes.PublisherEntityAttributes.FriendlyName,
+            EntityAttributes.PublisherEntityAttributes.UniqueName,
+            EntityAttributes.PublisherEntityAttributes.CustomizationPrefix,
+            EntityAttributes.PublisherEntityAttributes.Description,
+            EntityAttributes.PublisherEntityAttributes.SupportingWebsiteUrl,
+            EntityAttributes.PublisherEntityAttributes.EMailAddress
+        };
 
         public SolutionManager(CrmContext context)
             : base(context, EntityAttributes.SolutionComponentEntityAttributes.EntityName)
         { }
 
 
-        public List<SolutionEntity> GetAllSolutions()
+        public async Task<List<SolutionEntity>> GetAllSolutionsAsync()
         {
             try
             {
                 context.TracingService.TraceVerbose("GetAllSolutions started.");
 
-                string[] retrieveSolutionColumns = new string[] {
+                var retrieveSolutionColumns = new[] {
                     EntityAttributes.SolutionEntityAttributes.FriendlyNameFieldName,
                     EntityAttributes.SolutionEntityAttributes.ParentSolutionIdFieldName,
                     EntityAttributes.SolutionEntityAttributes.UniqueNameFieldName,
@@ -53,15 +45,16 @@ namespace Mjolnir.CRM.Core.EntityManagers
                     EntityAttributes.SolutionEntityAttributes.Description
                 };
 
-                QueryExpression query = new QueryExpression(EntityAttributes.SolutionEntityAttributes.EntityName);
-                query.ColumnSet = new ColumnSet(retrieveSolutionColumns);
+                var query = new QueryExpression(EntityAttributes.SolutionEntityAttributes.EntityName)
+                {
+                    ColumnSet = new ColumnSet(retrieveSolutionColumns)
+                };
 
-                return RetrieveMultiple(null, retrieveSolutionColumns)
-                           .ToList<SolutionEntity>();
+                return (await RetrieveMultipleAsync(query)).ToList<SolutionEntity>();
             }
             catch (Exception ex)
             {
-                this.HandleException(ex);
+                HandleException(ex);
                 return null;
             }
         }
@@ -112,7 +105,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
             try
             {
                 if (solution.Contains(EntityAttributes.SolutionEntityAttributes.IsManagedFieldName) &&
-                        solution.GetAttributeValue<bool>(EntityAttributes.SolutionEntityAttributes.IsManagedFieldName) == true)
+                        solution.GetAttributeValue<bool>(EntityAttributes.SolutionEntityAttributes.IsManagedFieldName))
                 {
                     return true;
                 }
@@ -199,7 +192,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
                             new Version(solution.GetAttributeValue<string>(EntityAttributes.SolutionEntityAttributes.VersionFieldName))).ToString()
                 };
 
-                return (CloneAsSolutionResponse)this.context.OrganizationService.Execute(cloneAsSolutionRequest);
+                return (CloneAsSolutionResponse)context.OrganizationService.Execute(cloneAsSolutionRequest);
             }
             catch (Exception ex)
             {
@@ -208,26 +201,28 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        
+
         public Guid GetSolutionIdByUniqueSolutionName(string uniqueSolutionName)
         {
             context.TracingService.TraceVerbose("GetSolutionIdByUniqueSolutionName started.");
 
             try
             {
-                string[] retrieveSolutionColumns = new string[] {
+                var retrieveSolutionColumns = new[] {
                     EntityAttributes.SolutionEntityAttributes.UniqueNameFieldName
                 };
 
-                QueryExpression query = new QueryExpression(EntityAttributes.SolutionEntityAttributes.EntityName);
-                query.ColumnSet = new ColumnSet(retrieveSolutionColumns);
+                var query = new QueryExpression(EntityAttributes.SolutionEntityAttributes.EntityName)
+                {
+                    ColumnSet = new ColumnSet(retrieveSolutionColumns)
+                };
                 query.Criteria.AddCondition(new ConditionExpression(EntityAttributes.SolutionEntityAttributes.IdFieldName, ConditionOperator.Equal, uniqueSolutionName));
 
                 var result = context.OrganizationService.RetrieveMultiple(query);
 
-                if (result != null && result.Entities.Any())
+                if (result?.Entities != null && result.Entities.Any())
                 {
-                    return result.Entities.FirstOrDefault().Id;
+                    return result.Entities.FirstOrDefault()?.Id ?? Guid.Empty;
                 }
 
                 return Guid.Empty;
@@ -245,20 +240,20 @@ namespace Mjolnir.CRM.Core.EntityManagers
 
             try
             {
-                string[] retrieveSolutionColumns = new string[] {
+                var retrieveSolutionColumns = new[] {
                     EntityAttributes.SolutionEntityAttributes.FriendlyNameFieldName,
                     EntityAttributes.SolutionEntityAttributes.ParentSolutionIdFieldName,
                     EntityAttributes.SolutionEntityAttributes.UniqueNameFieldName,
                     EntityAttributes.SolutionEntityAttributes.VersionFieldName,
                     EntityAttributes.SolutionEntityAttributes.IsManagedFieldName
                 };
-                
+
                 return RetrieveMultipleByAttributeExactValue(EntityAttributes.SolutionEntityAttributes.ParentSolutionIdFieldName, solutionId, retrieveSolutionColumns)
                             .ToList<SolutionEntity>();
             }
             catch (Exception ex)
             {
-                this.HandleException(ex);
+                HandleException(ex);
                 return null;
             }
         }
@@ -280,7 +275,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 solution.Attributes.Add(EntityAttributes.SolutionEntityAttributes.VersionFieldName, version.ToString());
 
 
-                var newSolutionId = this.context.OrganizationService.Create(solution);
+                var newSolutionId = context.OrganizationService.Create(solution);
                 solution.Attributes[EntityAttributes.SolutionEntityAttributes.IdFieldName] = newSolutionId;
 
                 return solution.ToSpecificEntity<SolutionEntity>();
@@ -308,7 +303,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
                     EntityAttributes.SolutionComponentEntityAttributes.IsMetadata,
                     EntityAttributes.SolutionComponentEntityAttributes.RootComponentBehavior,
                 };
-                
+
                 return RetrieveMultipleByAttributeExactValue(EntityAttributes.SolutionComponentEntityAttributes.SolutionId, new object[] { patchSolutionId }, retrieveSolutionComponentColumns)
                     .ToList<SolutionComponentEntity>();
             }
@@ -348,13 +343,13 @@ namespace Mjolnir.CRM.Core.EntityManagers
                         if (component.Contains(EntityAttributes.SolutionComponentEntityAttributes.RootComponentBehavior))
                         {
                             var behaviour = (SolutionComponentRootComponentBehavior)component.GetAttributeValue<OptionSetValue>(EntityAttributes.SolutionComponentEntityAttributes.RootComponentBehavior).Value;
-                            if (behaviour == SolutionComponentRootComponentBehavior.Donotincludesubcomponents && isMetadata == true)
+                            if (behaviour == SolutionComponentRootComponentBehavior.Donotincludesubcomponents && isMetadata)
                             {
                                 addSolutionComponentRequest.DoNotIncludeSubcomponents = true;
                             }
                         }
 
-                        var response = (AddSolutionComponentResponse)context.OrganizationService.Execute(addSolutionComponentRequest);
+                        context.OrganizationService.Execute(addSolutionComponentRequest);
                     }
                 }
                 else
@@ -401,7 +396,6 @@ namespace Mjolnir.CRM.Core.EntityManagers
             {
                 if (solution.Contains(EntityAttributes.SolutionEntityAttributes.Description))
                 {
-                    var solutionName = GetUniqueSolutionName(solution);
                     var description = solution.GetAttributeValue<string>(EntityAttributes.SolutionEntityAttributes.Description);
 
                     //TODO: contastant
@@ -442,14 +436,14 @@ namespace Mjolnir.CRM.Core.EntityManagers
             }
         }
 
-        public EntityCollection GetSolutionUpgrades(Entity parentSolution)
+        public async Task<EntityCollection> GetSolutionUpgradesAync(Entity parentSolution)
         {
             context.TracingService.TraceVerbose("GetSolutionUpgrades started.");
 
             var upgradeSolutions = new EntityCollection();
             var sortedUpgradeSolutions = new EntityCollection();
 
-            var allSolutions = GetAllSolutions();
+            var allSolutions = await GetAllSolutionsAsync();
             var parentSolutionName = GetUniqueSolutionName(parentSolution);
 
             foreach (var solution in allSolutions)
