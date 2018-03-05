@@ -98,6 +98,7 @@
     <Compile Include="EntityManagers\PublisherManager.cs" />
     <Compile Include="EntityManagers\RoleManager.cs" />
     <Compile Include="EntityManagers\RolePrivilegesManager.cs" />
+    <Compile Include="EntityManagers\SolutionComponentManager.cs" />
     <Compile Include="EntityManagers\SystemFormManager.cs" />
     <Compile Include="EntityManagers\WebResourceManager.cs" />
     <Compile Include="Enums\ComponentType.cs" />

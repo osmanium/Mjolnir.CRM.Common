@@ -5,6 +5,7 @@ using System.Configuration;
 using Mjolnir.CRM.Core;
 using Mjolnir.CRM.Core.EntityManagers;
 using Microsoft.Xrm.Sdk;
+using Shouldly;
 
 namespace Mjolnir.CRM.Core.Tests
 {
@@ -25,12 +26,21 @@ namespace Mjolnir.CRM.Core.Tests
         [TestMethod]
         public void should_retrieve_all_solutions()
         {
-            var solutionManager = new SolutionManager(SourceCrmContext);
-
+            var solutionManager  = new Mjolnir.CRM.Core.EntityManagers.SolutionManager(SourceCrmContext);
             var allSolutionsTask = solutionManager.GetAllSolutionsAsync();
             allSolutionsTask.Wait();
-            var result = allSolutionsTask.Result;
+            var allSolutions = allSolutionsTask.Result;
+            allSolutions.Count.ShouldBeGreaterThan(0);
+        }
 
+        [TestMethod]
+        public void should_retrieve_solution_id_by_unique_name()
+        {
+            var solutionManager  = new Mjolnir.CRM.Core.EntityManagers.SolutionManager(SourceCrmContext);
+            var task = solutionManager.GetSolutionIdByUniqueSolutionNameAsync("BaseLibrary");
+            task.Wait();
+            var solutionId = task.Result;
+            solutionId.ShouldNotBe(Guid.Empty);
         }
     }
 }

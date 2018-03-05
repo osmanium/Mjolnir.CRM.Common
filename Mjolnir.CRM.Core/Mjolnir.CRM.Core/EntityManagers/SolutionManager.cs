@@ -26,7 +26,7 @@ namespace Mjolnir.CRM.Core.EntityManagers
         };
 
         public SolutionManager(CrmContext context)
-            : base(context, EntityAttributes.SolutionComponentEntityAttributes.EntityName)
+            : base(context, EntityAttributes.SolutionEntityAttributes.EntityName)
         { }
 
 
@@ -200,32 +200,23 @@ namespace Mjolnir.CRM.Core.EntityManagers
                 return null;
             }
         }
-
-
-        public Guid GetSolutionIdByUniqueSolutionName(string uniqueSolutionName)
+        
+        public async Task<Guid> GetSolutionIdByUniqueSolutionNameAsync(string uniqueSolutionName)
         {
             context.TracingService.TraceVerbose("GetSolutionIdByUniqueSolutionName started.");
 
             try
             {
                 var retrieveSolutionColumns = new[] {
-                    EntityAttributes.SolutionEntityAttributes.UniqueNameFieldName
+                    EntityAttributes.SolutionEntityAttributes.IdFieldName,
+                    EntityAttributes.SolutionEntityAttributes.UniqueNameFieldName,
                 };
 
-                var query = new QueryExpression(EntityAttributes.SolutionEntityAttributes.EntityName)
-                {
-                    ColumnSet = new ColumnSet(retrieveSolutionColumns)
-                };
-                query.Criteria.AddCondition(new ConditionExpression(EntityAttributes.SolutionEntityAttributes.IdFieldName, ConditionOperator.Equal, uniqueSolutionName));
+                var solutionRecord = await RetrieveFirstByAttributeExactValueAsync(EntityAttributes.SolutionEntityAttributes.UniqueNameFieldName,
+                                                        uniqueSolutionName, retrieveSolutionColumns);
 
-                var result = context.OrganizationService.RetrieveMultiple(query);
 
-                if (result?.Entities != null && result.Entities.Any())
-                {
-                    return result.Entities.FirstOrDefault()?.Id ?? Guid.Empty;
-                }
-
-                return Guid.Empty;
+                return solutionRecord.Id;
             }
             catch (Exception ex)
             {
